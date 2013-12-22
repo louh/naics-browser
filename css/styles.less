@@ -1,0 +1,72 @@
+@import 'normalize.less';
+@import url(main.css);
+
+@color-scheme:          #21687f;
+@lightgray:             #c1c1c1;
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@body-font:             'Open Sans', 'Helvetica Neue', sans-serif;
+
+
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-color: #f8f8f8;
+	font-family: @body-font;
+	font-size: 14px;
+}
+
+#main {
+	width: 700px;
+	padding: 30px 30px 60px;
+	margin: 0 auto;
+	background-color: white;
+	box-shadow: 0 0 4px rgba(0,0,0,0.15);
+	min-height: 100%;
+}
+
+.note {
+	font-size: 80%;
+	color: #999;
+}
+
+h1 {
+	font-size: 26px;
+}
+
+.naics-description {
+	font-size: 125%;
+}
+
+.crumbs {
+	font-size: 90%;
+	.naics-year {
+		font-weight: bold;
+	}
+	.naics-level::before {
+		content: ' / ';
+	}
+}
+
+table {
+	width: 100%;
+	font-size: 80%;
+	thead {
+		font-weight: bold;
+		background-color: #e9e9e9;
+	}
+	tr {
+		border-bottom: 1px solid @lightgray;
+		vertical-align: top;
+	}
+	td {
+		padding: 5px 0;
+	}
+}

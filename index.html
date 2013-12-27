@@ -41,7 +41,7 @@
       <div class='crumbs'>
         <span class='naics-page'><a href='?'>NAICS Viewer</a></span>
         <span class='naics-year'><%= year %> NAICS</span>
-        <span class='naics-level level2'>Sector 54 &mdash; Professional, Scientific, and Technical Services</span>
+        <span class='naics-level level2'>Sector <%= twoDigit.code %> &mdash; <%= twoDigit.title %></span>
       </div>
 
       <h1>
@@ -215,7 +215,7 @@
 
       <div class='link'>
         <p>
-          <a href='http://naics.codeforamerica.org/v0/q?year=<%= year %>&code=<%= code %>'>View this data as JSON</a>.
+          <a href='http://naics.codeforamerica.org/v0/q?year=<%= year %>&code=<%= code %>'>View this data as JSON.</a>
         </p>
       </div>
 

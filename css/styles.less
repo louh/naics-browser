@@ -2,12 +2,13 @@
 @import url(main.css);
 
 @color-scheme:          #21687f;
-@lightgray:             #c1c1c1;
+@lightgray:             #d9d9d9;
 
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700|Lora:400,700);
 
-@body-font:             'Open Sans', 'Helvetica Neue', sans-serif;
+@body-font:             'Lora', serif;
+@accent-font:           'Open Sans', 'Helvetica Neue', sans-serif;
 
 
 * {
@@ -33,7 +34,7 @@ body, html {
 }
 
 .note {
-  font-size: 80%;
+  font-size: 90%;
   color: #999;
 }
 
@@ -47,6 +48,7 @@ h1 {
 
 .crumbs {
   font-size: 90%;
+  font-family: @accent-font;
   .naics-page {
     font-weight: bold;
     a {
@@ -82,4 +84,9 @@ table {
   td {
     padding: 5px 0;
   }
+}
+
+.link {
+  border-top: 1px solid @lightgray;
+  font-family: @accent-font;
 }

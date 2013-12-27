@@ -1,6 +1,6 @@
 @import url(main.css);
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700|Lora:400,700);
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
@@ -364,7 +364,7 @@ html {
   width: 100%;
   position: absolute;
   background-color: #f8f8f8;
-  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 14px;
 }
 #main {
@@ -376,7 +376,7 @@ html {
   min-height: 100%;
 }
 .note {
-  font-size: 80%;
+  font-size: 90%;
   color: #999;
 }
 h1 {
@@ -387,6 +387,7 @@ h1 {
 }
 .crumbs {
   font-size: 90%;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .crumbs .naics-page {
   font-weight: bold;
@@ -416,9 +417,13 @@ table thead {
   background-color: #e9e9e9;
 }
 table tr {
-  border-bottom: 1px solid #c1c1c1;
+  border-bottom: 1px solid #d9d9d9;
   vertical-align: top;
 }
 table td {
   padding: 5px 0;
+}
+.link {
+  border-top: 1px solid #d9d9d9;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }

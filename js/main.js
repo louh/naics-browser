@@ -55,7 +55,7 @@
             this.naicsRecord = response
           },
           error: function (jqxhr, status, error) {
-            console.log('Error loading from NAICS API. Status: ' + status + '. Error: ' + error)
+            page.displayError(jqxhr, status, error)
           }
         })
       ).then(function() {
@@ -69,7 +69,8 @@
     },
 
     displayNAICSRecord: function (record) {
-      
+      $('#frontpage').hide()
+
       // Set document title
       document.title = record.code + ' ' + record.title + ' — ' + record.year + ' NAICS Viewer'
 
@@ -80,6 +81,16 @@
       var snippet = _.template(template)
       document.getElementById('record').innerHTML = snippet(record)
 
+    },
+
+    displayError: function (jqxhr, status, error) {
+
+      var error = document.getElementById('record')
+
+//      var str = 'Error loading from NAICS API. Status: ' + status + '. Error: ' + error
+      if (jqxhr.status == 404) {
+        error.innerHTML = jqxhr.responseJSON.error_msg
+      }
     }
 
   }

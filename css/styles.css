@@ -388,8 +388,21 @@ h1 {
 .crumbs {
   font-size: 90%;
 }
+.crumbs .naics-page {
+  font-weight: bold;
+}
+.crumbs .naics-page a {
+  color: #8aa6af;
+  text-decoration: none;
+}
+.crumbs .naics-page a:hover {
+  text-decoration: underline;
+}
 .crumbs .naics-year {
   font-weight: bold;
+}
+.crumbs .naics-year::before {
+  content: ' / ';
 }
 .crumbs .naics-level::before {
   content: ' / ';

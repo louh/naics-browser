@@ -81,11 +81,13 @@
       <div class='naics-crossrefs'>
         <h3>Cross references</h3>
 
+        <% if (crossrefs.length > 1) { %>
         <p>Establishments primarily engaged in&mdash;</p>
+        <% } %>
 
         <ul>
           <% for (var item in crossrefs) { %>
-          <li><%= crossrefs[item].text.replace('--','&mdash;') %></li>
+          <li><%= crossrefs[item].text %></li>
           <% } %>
         </ul>
       </div>

@@ -169,6 +169,11 @@
       // Set document title
       document.title = record.code + ' ' + record.title + ' — ' + record.year + ' NAICS Viewer'
 
+      // Parse record and insert HTML
+      for (var i = 0; i < record.crossrefs.length; i ++) {
+        record.crossrefs[i] = this._parseCrossrefs(record.crossrefs[i])
+      }
+
       console.log(record)
 
       var template = document.getElementById('template-record').innerHTML
@@ -186,6 +191,11 @@
       if (jqxhr.status == 404) {
         error.innerHTML = jqxhr.responseJSON.error_msg
       }
+    },
+
+    _parseCrossrefs: function (crossref) {
+      crossref.text = crossref.text.replace('--','&mdash;')
+      return crossref
     }
 
   }

@@ -170,8 +170,10 @@
       document.title = record.code + ' ' + record.title + ' — ' + record.year + ' NAICS Viewer'
 
       // Parse record and insert HTML
-      for (var i = 0; i < record.crossrefs.length; i ++) {
-        record.crossrefs[i] = this._parseCrossrefs(record.crossrefs[i])
+      if (record.crossrefs) {
+        for (var i = 0; i < record.crossrefs.length; i ++) {
+          record.crossrefs[i] = this._parseCrossrefs(record.crossrefs[i])
+        }
       }
 
       console.log(record)
@@ -185,16 +187,31 @@
 
     displayError: function (jqxhr, status, error) {
 
-      var error = document.getElementById('record')
+      var message = document.getElementById('message')
 
 //      var str = 'Error loading from NAICS API. Status: ' + status + '. Error: ' + error
       if (jqxhr.status == 404) {
-        error.innerHTML = jqxhr.responseJSON.error_msg
+        message.className += 'error'
+        message.innerHTML = jqxhr.responseJSON.error_msg
       }
     },
 
+
+    // Parsing descriptions
+    // Numerical links to Sectors and Subsectors may exist.
+
     _parseCrossrefs: function (crossref) {
+      // Replace dashes
       crossref.text = crossref.text.replace('--','&mdash;')
+
+      // Add links
+      /*
+          Notes:
+          Preceding the code # may be words like 'Industry', 'Industry Group', 'U.S. Industry', 'Subsector'
+          After the code # is the title, terminated by a semicolon or period.
+          Use this to figure out the length of the link text.
+      */
+
       return crossref
     }
 

@@ -18,7 +18,7 @@
   
   <section id='main' role='main' class='row'>
 
-    <div id='frontpage' class='small-12 columns'>
+    <div id='frontpage' class='small-12 columns' style='display:none'>
       <h1>Welcome to NAICS Viewer.</h1>
 
       <p>
@@ -53,17 +53,23 @@
       </h1>
 
       <% if (typeof trilateral !== 'undefined' && trilateral == 1) { %>
-      <div class='note'>
+      <p class='note'>
         Canadian, Mexican, and United States industries are comparable.  <a href='#'>Learn more</a>
-      </div>
+      </p>
       <% } %>
 
       <% if (typeof description !== 'undefined') { %>
       <div class='naics-description'>
-        <% for (var paragraph in description) { %>
-        <p>
-          <%= description[paragraph] %>
-        </p>
+        <% if (typeof description_code !== 'undefined') { %>
+          <p>
+            <a href='?year=<%= year %>&code=<%= description_code %>'><%= description[0] %></a>
+          </p>
+        <% } else { %>
+          <% for (var paragraph in description) { %>
+          <p>
+            <%= description[paragraph] %>
+          </p>
+          <% } %>
         <% } %>
       </div>
       <% } %>

@@ -23,6 +23,8 @@
       request = this._getNAICSRequest()
       if (request.year && request.code) {
         this._getNAICSRecord(request.year, request.code)
+      } else {
+        document.getElementById('frontpage').style.display = 'block'
       }
     },
 

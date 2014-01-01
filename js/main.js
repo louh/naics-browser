@@ -171,9 +171,7 @@
 
       // Parse record and insert HTML
       if (record.crossrefs) {
-        for (var i = 0; i < record.crossrefs.length; i ++) {
-          record.crossrefs[i] = this._parseCrossrefs(record.crossrefs[i])
-        }
+        record.crossrefs = this._parseCrossrefs(record)
       }
 
       console.log(record)
@@ -189,7 +187,6 @@
 
       var message = document.getElementById('message')
 
-//      var str = 'Error loading from NAICS API. Status: ' + status + '. Error: ' + error
       if (jqxhr.status == 404) {
         message.className += 'error'
         message.innerHTML = jqxhr.responseJSON.error_msg
@@ -200,19 +197,32 @@
     // Parsing descriptions
     // Numerical links to Sectors and Subsectors may exist.
 
-    _parseCrossrefs: function (crossref) {
-      // Replace dashes
-      crossref.text = crossref.text.replace('--','&mdash;')
+    _parseCrossrefs: function (record) {
 
-      // Add links
-      /*
-          Notes:
-          Preceding the code # may be words like 'Industry', 'Industry Group', 'U.S. Industry', 'Subsector'
-          After the code # is the title, terminated by a semicolon or period.
-          Use this to figure out the length of the link text.
-      */
+      if (!record.crossrefs) {
+        return
+      }
 
-      return crossref
+      for (var i = 0; i < record.crossrefs.length; i ++) {
+        var crossref = record.crossrefs[i]
+
+        // Replace dashes
+        crossref.text = crossref.text.replace('--','&mdash;')
+
+        // Add links
+        /*
+            Notes:
+            Preceding the code # may be words like 'Industry', 'Industry Group', 'U.S. Industry', 'Subsector'
+            After the code # is the title, terminated by a semicolon or period.
+            Use this to figure out the actual length of the link text.
+        */
+        var x = crossref.text.indexOf(crossref.code)
+        if (x > 0) {
+          crossref.text = crossref.text.replace(crossref.code, '<a href="?year=' + record.year + '&code=' + crossref.code + '">' + crossref.code + '</a>')
+        }
+      }
+
+      return record.crossrefs
     }
 
   }

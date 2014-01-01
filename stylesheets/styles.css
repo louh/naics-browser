@@ -2722,6 +2722,9 @@ body, html {
   position: absolute;
   font-size: 14px; }
 
+a:hover {
+  text-decoration: underline; }
+
 #main {
   padding: 16px 0;
   background-color: white;
@@ -2779,3 +2782,10 @@ table {
 .error {
   font-weight: bold;
   color: red; }
+
+.browsehappy {
+  background-color: #ffffef;
+  margin: 0;
+  padding: 5px 20px;
+  border-bottom: 1px solid lightgray;
+  z-index: 9999; }

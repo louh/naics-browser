@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class='no-js'>
+<html lang='en'>
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -7,34 +7,48 @@
     <meta name='description' content=''>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:400,700'>
     <link rel='stylesheet' href='stylesheets/styles.css'>
-
-    <script src='js/vendor/modernizr-2.7.1.min.js'></script>
   </head>
   <body>
   <!--[if lt IE 9]>
       <p class='browsehappy'>You are using an <strong>outdated</strong> browser. Please <a href='http://browsehappy.com/'>upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  
-  <section id='main' role='main' class='row'>
 
-    <div id='frontpage' class='small-12 columns' style='display:none'>
-      <h1>Welcome to NAICS Viewer.</h1>
+  <section id='main' role='main' class='viewport'>
+    <div class='left-column'>
+      <h1><a href='?'>NAICS Viewer</a></h1>
 
-      <p>
-        This is a basic alternative for the current NAICS website hosted at the <a href='http://www.census.gov/eos/www/naics/index.html' target='_blank'>US Census Bureau</a>. It is a work in progress and its aims are to demonstrate a basic use of <a href='http://naics.codeforamerica.org/' target='_blank'>Code for America's NAICS API</a> that is also more user friendly. For updates, star and watch <a href='https://www.github.com/louh/naics-viewer' target='_blank'>the GitHub repository</a>.
-      </p>
-
-      <p>
-        For a sample NAICS code, <a href='?year=2012&code=519120'>take a look at this one.</a>
+      <div class='search-box'>
+        <input type='text' placeholder='search'>
+      </div>
     </div>
+    <div class='right-column'>
+      <div id='frontpage' style='display: none;'>
+        <div class='crumbs'>
+          Introduction
+        </div>
 
-    <div id='message' class='small-12 columns'>
+        <p>
+          NAICS Viewer is an alternative to the NAICS website hosted by the <a href='http://www.census.gov/eos/www/naics/index.html' target='_blank'>US Census Bureau</a>. It uses <a href='http://naics.codeforamerica.org/' target='_blank'>Code for America's NAICS API</a> to provide a more user-friendly interface. The code is <a href='https://www.github.com/louh/naics-viewer' target='_blank'>open source</a>.
+        </p>
+
+        <ul class='pills js-naics-year-select'>
+          <li class='naics-year pill'>2007</li>
+          <li class='naics-year pill pill-selected'>2012</li>
+        </ul>
+
+        <p>
+          For a sample NAICS code, <a href='?year=2012&code=519120'>take a look at this one.</a>
+        </p>
+      </div>
+
+      <div id='message'>
+      </div>
+
+      <div id='record'>
+      </div>
     </div>
-
-    <div id='record' class='small-12 columns'>
-    </div>
-
   </section>
 
   <section id='templates'>
@@ -42,15 +56,14 @@
     <script type='text/template' id='template-record'>
 
       <div class='crumbs'>
-        <span class='naics-page'><a href='?'>NAICS Viewer</a></span>
         <span class='naics-year'><%= year %> NAICS</span>
         <span class='naics-level level2'>Sector <%= twoDigit.code %> &mdash; <%= twoDigit.title %></span>
       </div>
 
-      <h1>
+      <h2>
         <span class='naics-code'><%= code %></span>
         <span class='naics-title'><%= title %></span>
-      </h1>
+      </h2>
 
       <% if (typeof trilateral !== 'undefined' && trilateral == 1) { %>
       <p class='note'>

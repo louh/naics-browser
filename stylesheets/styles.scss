@@ -2,19 +2,20 @@
 @import 'vendor/main.css'; // HTML5 Boilerplate default CSS file
 
 // VARIABLES
-$color-scheme:        #21687f;
-$lightgray:           #d9d9d9;
+$color-scheme: #368fc8;
+$lightgray: #d9d9d9;
 
 // TYPOGRAPHY
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700|Lora:400,700);
 
-$body-font:   'Lora', serif;
-$accent-font: 'Open Sans', 'Helvetica Neue', sans-serif;
+$body-font: 'Source Sans Pro', sans-serif;
+$accent-font: 'Montserrat', sans-serif;
 
 // IMPORTS
-@import 'bourbon/bourbon';
 @import 'settings';
 @import 'foundation';
+
+// RESPONSIVE BREAKPOINTS
+$medium-up: 'only screen and (min-width: 40.063em)';
 
 // RESETS
 * {
@@ -22,26 +23,37 @@ $accent-font: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 // LAYOUT
-
 body, html {
   height: 100%;
-  width: 100%;
-  position: absolute;
-  font-size: 14px;
 }
 
-a:hover {
-  text-decoration: underline;
+body {
+  color: #494949;
+  font-weight: 400;
 }
 
-#main {
-  @media #{$small} {
-    padding: 30px 30px 60px;
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
-  padding: 16px 0;
-  background-color: white;
-  box-shadow: 0 0 4px rgba(0,0,0,0.15);
-  min-height: 100%;
+}
+
+.viewport {
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+
+  @media #{$medium-up} {
+    position: fixed;
+    top: 3em;
+    left: 6em;
+    right: 6em;
+    bottom: 3em;
+    padding: 0;
+    overflow: hidden;
+  }
 }
 
 .note {
@@ -49,9 +61,101 @@ a:hover {
   color: #999;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  font-family: $accent-font;
+  line-height: 1.1;
+}
+
 h1 {
-  line-height: 100%;
-  margin: 1.5rem 0;
+  font-size: 1em;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 1em;
+
+  a,
+  a:hover,
+  a:active,
+  a:visited {
+    color: inherit;
+  }
+}
+
+h3 {
+  font-weight: 400;
+}
+
+.left-column {
+  position: relative;
+  width: auto;
+  margin-bottom: 1em;
+
+  @media #{$medium-up} {
+    position: absolute;
+    width: 200px;
+    top: 0;
+    left: 0;
+  }
+}
+
+.right-column {
+  position: relative;
+  width: auto;
+  left: 0;
+
+  @media #{$medium-up} {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 230px;
+    padding-right: 20px; // For scrollbar
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+.search-box {
+  margin-top: 1.4em;
+
+  input {
+    width: 100%;
+    border-top: 1px solid rgba(0,0,0,0.10);
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+    border-left: 0;
+    border-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 2em;
+    background: transparent;
+  }
+}
+
+.pills {
+  user-select: none;
+  margin-left: 0;
+
+  .pill {
+    display: inline-block;
+    padding: 2px 12px;
+    margin: 0;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.05);
+    color: rgba(0,0,0,0.5);
+  }
+  .pill + .pill {
+    margin-left: 0.25em;
+  }
+  .pill-selected {
+    background-color: rgba(0,0,0,0.50);
+    color: white;
+  }
 }
 
 .naics-description {
@@ -59,27 +163,32 @@ h1 {
 }
 
 .crumbs {
-  font-size: 90%;
   font-family: $accent-font;
-  .naics-page {
-    font-weight: bold;
-    a {
-      color: desaturate(lighten($color-scheme, 30%), 40%);
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+  font-weight: 400;
+  font-size: 1em;
+  color: rgba(92,92,92,0.5);
+  line-height: 1.1;
+  margin-bottom: 1em;
+
   .naics-year {
-    font-weight: bold;
+    font-weight: 600;
+  }
+  .naics-level {
+    font-weight: 300;
     &::before {
       content: ' / ';
     }
   }
-  .naics-level::before {
-    content: ' / ';
-  }
+}
+
+.naics-code {
+  color: rgba(92,92,92,0.5);
+  font-weight: 300;
+  font-size: 90%;
+  letter-spacing: -0.5px;
+}
+.naics-title {
+  font-weight: 400;
 }
 
 table {

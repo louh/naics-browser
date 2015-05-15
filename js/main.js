@@ -182,11 +182,9 @@
 
       var snippet = _.template(template)
       document.getElementById('record').innerHTML = snippet(record)
-
     },
 
     displayError: function (jqxhr, status, error) {
-
       var message = document.getElementById('message')
 
       if (jqxhr.status == 404) {
@@ -200,7 +198,6 @@
     // Numerical links to Sectors and Subsectors may exist.
 
     _parseCrossrefs: function (record) {
-
       if (!record.crossrefs) {
         return
       }
@@ -235,4 +232,18 @@
     
   })
 
-}());
+  var naicsSelectorEl = document.querySelector('.js-naics-year-select')
+  var naicsSelectorPills = naicsSelectorEl.querySelectorAll('.pill')
+  for (var i = 0, j = naicsSelectorPills.length; i < j; i++) {
+    var pill = naicsSelectorPills[i]
+    pill.addEventListener('click', _pillSelected, false)
+  }
+  function _pillSelected (event) {
+    for (var i = 0, j = naicsSelectorPills.length; i < j; i++) {
+      var pill = naicsSelectorPills[i]
+      pill.classList.remove('pill-selected')
+    }
+    event.target.classList.add('pill-selected')
+  }
+
+}())

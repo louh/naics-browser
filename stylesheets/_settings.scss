@@ -3,15 +3,15 @@
 
 @import "foundation/functions";
 
-$rem-base:                16px;
+$rem-base: 16px;
 
-$body-bg:                 #f8f8f8;
-$body-font-family:        $body-font;
+$body-bg: #f2f6fa;
+$body-font-family: $body-font;
 
-$primary-color:           $color-scheme;
+$primary-color: $color-scheme;
 
 // Topbar
-$topbar-bg-color:         lighten($body-bg, 6%);
-$topbar-height:           60px;
-$topbar-title-weight:     normal;
-$topbar-title-font-size:  20px;
+$topbar-bg-color: lighten($body-bg, 6%);
+$topbar-height: 60px;
+$topbar-title-weight: normal;
+$topbar-title-font-size: 20px;

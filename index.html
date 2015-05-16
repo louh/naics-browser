@@ -46,7 +46,7 @@
       <div id='message'>
       </div>
 
-      <div id='record'>
+      <div id='view'>
       </div>
     </div>
   </section>
@@ -55,187 +55,191 @@
 
     <script type='text/template' id='template-record'>
 
-      <div class='crumbs'>
-        <span class='naics-year'><%= year %> NAICS</span>
-        <span class='naics-level level2'>Sector <%= twoDigit.code %> &mdash; <%= twoDigit.title %></span>
-      </div>
+      <div id='record'>
+        <div class='naics-view'>
+          <div class='crumbs'>
+            <span class='naics-year'><%= year %> NAICS</span>
+            <span class='naics-level level2'>Sector <%= twoDigit.code %> &mdash; <%= twoDigit.title %></span>
+          </div>
 
-      <h2>
-        <span class='naics-code'><%= code %></span>
-        <span class='naics-title'><%= title %></span>
-      </h2>
+          <h2>
+            <span class='naics-code'><%= code %></span>
+            <span class='naics-title'><%= title %></span>
+          </h2>
 
-      <% if (typeof trilateral !== 'undefined' && trilateral == 1) { %>
-      <p class='note'>
-        Canadian, Mexican, and United States industries are comparable.  <a href='#'>Learn more</a>
-      </p>
-      <% } %>
-
-      <% if (typeof description !== 'undefined') { %>
-      <div class='naics-description'>
-        <% if (typeof description_code !== 'undefined') { %>
-          <p>
-            <a href='?year=<%= year %>&code=<%= description_code %>'><%= description[0] %></a>
-          </p>
-        <% } else { %>
-          <% for (var paragraph in description) { %>
-          <p>
-            <%= description[paragraph] %>
+          <% if (typeof trilateral !== 'undefined' && trilateral == 1) { %>
+          <p class='note'>
+            Canadian, Mexican, and United States industries are comparable.  <a href='#'>Learn more</a>
           </p>
           <% } %>
-        <% } %>
-      </div>
-      <% } %>
 
-      <% if (typeof examples !== 'undefined') { %>
-      <div class='naics-examples'>
-        <h3>Illustrative examples</h3>
-
-        <ul>
-          <% for (var item in examples) { %>
-          <li><%= examples[item] %></li>
+          <% if (typeof description !== 'undefined') { %>
+          <div class='naics-description'>
+            <% if (typeof description_code !== 'undefined') { %>
+              <p>
+                <a href='?year=<%= year %>&code=<%= description_code %>'><%= description[0] %></a>
+              </p>
+            <% } else { %>
+              <% for (var paragraph in description) { %>
+              <p>
+                <%= description[paragraph] %>
+              </p>
+              <% } %>
+            <% } %>
+          </div>
           <% } %>
-        </ul>
-      </div>
-      <% } %>
 
-      <% if (typeof crossrefs !== 'undefined') { %>
-      <div class='naics-crossrefs'>
-        <h3>Cross references</h3>
+          <% if (typeof examples !== 'undefined') { %>
+          <div class='naics-examples'>
+            <h3>Illustrative examples</h3>
 
-        <% if (crossrefs.length > 1) { %>
-        <p>Establishments primarily engaged in&mdash;</p>
-        <% } %>
-
-        <ul>
-          <% for (var item in crossrefs) { %>
-          <li><%= crossrefs[item].text %></li>
+            <ul>
+              <% for (var item in examples) { %>
+              <li><%= examples[item] %></li>
+              <% } %>
+            </ul>
+          </div>
           <% } %>
-        </ul>
-      </div>
-      <% } %>
 
-      <!-- DISABLED -->
-      <% if (typeof conversions !== 'undefined') { %>
-      <div class='naics-conversions'>
-        <h3>Index entries</h3>
+          <% if (typeof crossrefs !== 'undefined') { %>
+          <div class='naics-crossrefs'>
+            <h3>Cross references</h3>
 
-        <table>
-          <thead>
-            <tr>
-              <td>2002 NAICS</td>
-              <td>2007 NAICS</td>
-              <td>2012 NAICS</td>
-              <td>Corresponding Index Entries</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>CAD (computer-aided design) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>CAE (computer-aided engineering) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>CAM (computer-aided manufacturing) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer hardware consulting services or consultants</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer software consulting services or consultants</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer systems integration analysis and design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer systems integration design consulting services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer systems integrator services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer-aided design (CAD) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer-aided engineering (CAE) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Computer-aided manufacturing (CAM) systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Information management computer systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Local area network (LAN) computer systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Network systems integration design services, computer</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Office automation computer systems integration design services</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Systems integration design consulting services, computer</td>
-            </tr>
-            <tr>
-              <td>541512</td>
-              <td>541512</td>
-              <td>541512</td>
-              <td>Systems integration design services, computer</td>
-            </tr>
-          </tbody>
-        </table>
+            <% if (crossrefs.length > 1) { %>
+            <p>Establishments primarily engaged in&mdash;</p>
+            <% } %>
+
+            <ul>
+              <% for (var item in crossrefs) { %>
+              <li><%= crossrefs[item].text %></li>
+              <% } %>
+            </ul>
+          </div>
+          <% } %>
+
+          <!-- DISABLED -->
+          <% if (typeof conversions !== 'undefined') { %>
+          <div class='naics-conversions'>
+            <h3>Index entries</h3>
+
+            <table>
+              <thead>
+                <tr>
+                  <td>2002 NAICS</td>
+                  <td>2007 NAICS</td>
+                  <td>2012 NAICS</td>
+                  <td>Corresponding Index Entries</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>CAD (computer-aided design) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>CAE (computer-aided engineering) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>CAM (computer-aided manufacturing) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer hardware consulting services or consultants</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer software consulting services or consultants</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer systems integration analysis and design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer systems integration design consulting services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer systems integrator services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer-aided design (CAD) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer-aided engineering (CAE) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Computer-aided manufacturing (CAM) systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Information management computer systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Local area network (LAN) computer systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Network systems integration design services, computer</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Office automation computer systems integration design services</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Systems integration design consulting services, computer</td>
+                </tr>
+                <tr>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>541512</td>
+                  <td>Systems integration design services, computer</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+        </div>
       </div>
-      <% } %>
 
       <div class='link'>
         <p>

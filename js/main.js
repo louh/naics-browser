@@ -61,7 +61,7 @@
           }
         })
       ).then(function() {
-        
+
         // Add additional information
         this.naicsRecord.year = year
         this.naicsRecord.twoDigit = page._getTwoDigitCode(this.naicsRecord.code)
@@ -181,7 +181,7 @@
       var template = document.getElementById('template-record').innerHTML
 
       var snippet = _.template(template)
-      document.getElementById('record').innerHTML = snippet(record)
+      document.getElementById('view').innerHTML = snippet(record)
     },
 
     displayError: function (jqxhr, status, error) {
@@ -227,9 +227,9 @@
   }
 
   $(document).ready(function() {
-    
+
     page.init()
-    
+
   })
 
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')

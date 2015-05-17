@@ -22,6 +22,7 @@
       var request = this.naicsRequest
       request = this._getNAICSRequest()
       if (request.year && request.code) {
+        document.getElementById('loading').style.display = 'block'
         this._getNAICSRecord(request.year, request.code)
       } else {
         document.getElementById('frontpage').style.display = 'block'
@@ -39,8 +40,7 @@
           request[keyValue[0]] = keyValue[1]
         }
         return request
-      }
-      else {
+      } else {
         request['errorCode'] = '100'
         request['errorMsg']  = 'No NAICS request specified'
         return request
@@ -72,9 +72,8 @@
     },
 
     _getTwoDigitCode: function (code) {
-      var twoDigitCode,
-          twoDigitTitle
-
+      var twoDigitCode
+      var twoDigitTitle
       var twoDigitCodeRaw = parseInt(code.toString().substring(0,2))
 
       // Hard coded right now because I'm too lazy to engineer it
@@ -182,6 +181,7 @@
 
       var snippet = _.template(template)
       document.getElementById('view').innerHTML = snippet(record)
+      $('#loading').hide()
     },
 
     displayError: function (jqxhr, status, error) {

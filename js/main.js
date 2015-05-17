@@ -210,7 +210,7 @@
         // Add links
         /*
             Notes:
-            Preceding the code # may be words like 'Industry', 'Industry Group', 'U.S. Industry', 'Subsector'
+            Preceding the code # may be words like 'Industry', 'Industry Group', 'U.S. Industry', 'Subsector', or 'Sector'
             After the code # is the title, terminated by a semicolon or period.
             Use this to figure out the actual length of the link text.
         */
@@ -218,7 +218,7 @@
         if (x > 0) {
           var codeRegexp = new RegExp(crossref.code + '.+(?=[.;])', 'g')
           crossref.text = crossref.text.replace(codeRegexp, '$&</a>')
-          crossref.text = crossref.text.replace(/((U.S. )?Industry( Group)?)|(Subsector)/g, '<a href="?year=' + record.year + '&code=' + crossref.code + '">$&')
+          crossref.text = crossref.text.replace(/((U.S. )?Industry)|((Subs|S)ector)/g, '<a href="?year=' + record.year + '&code=' + crossref.code + '">$&')
         }
       }
 

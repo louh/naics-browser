@@ -14,7 +14,6 @@
   // q?year=2012&code=519120
 
   var page = {
-
     naicsRequest: null,
     naicsRecord: null,
 
@@ -61,7 +60,6 @@
           }
         })
       ).then(function() {
-
         // Add additional information
         this.naicsRecord.year = year
         this.naicsRecord.twoDigit = page._getTwoDigitCode(this.naicsRecord.code)
@@ -178,8 +176,8 @@
       console.log(record)
 
       var template = document.getElementById('template-record').innerHTML
-
       var snippet = _.template(template)
+
       document.getElementById('view').innerHTML = snippet(record)
       $('#loading').hide()
     },
@@ -191,8 +189,9 @@
         message.className += 'error'
         message.innerHTML = jqxhr.responseJSON.error_msg
       }
-    },
 
+      $('#loading').hide()
+    },
 
     // Parsing descriptions
     // Numerical links to Sectors and Subsectors may exist.
@@ -217,7 +216,9 @@
         */
         var x = crossref.text.indexOf(crossref.code)
         if (x > 0) {
-          crossref.text = crossref.text.replace(crossref.code, '<a href="?year=' + record.year + '&code=' + crossref.code + '">' + crossref.code + '</a>')
+          var codeRegexp = new RegExp(crossref.code + '.+(?=[.;])', 'g')
+          crossref.text = crossref.text.replace(codeRegexp, '$&</a>')
+          crossref.text = crossref.text.replace(/((U.S. )?Industry( Group)?)|(Subsector)/g, '<a href="?year=' + record.year + '&code=' + crossref.code + '">$&')
         }
       }
 
@@ -227,9 +228,7 @@
   }
 
   $(document).ready(function() {
-
     page.init()
-
   })
 
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')

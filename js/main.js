@@ -173,6 +173,13 @@
         record.crossrefs = this._parseCrossrefs(record)
       }
 
+      // Make 'The Sector as a Whole' on top-level NAICS into a subtitle
+      if (record.code.toString().length === 2) {
+        if (record.description[0] === 'The Sector as a Whole') {
+          record.description[0] = '<h3>The Sector as a Whole</h3>'
+        }
+      }
+
       console.log(record)
 
       var template = document.getElementById('template-record').innerHTML

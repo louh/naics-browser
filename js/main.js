@@ -166,7 +166,7 @@
       $('#frontpage').hide()
 
       // Set document title
-      document.title = record.code + ' ' + record.title + ' — ' + record.year + ' NAICS Viewer'
+      document.title = record.code + ' ' + record.title + ' – ' + record.year + ' NAICS Viewer'
 
       // Parse record and insert HTML
       if (record.crossrefs) {

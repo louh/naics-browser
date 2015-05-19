@@ -2173,7 +2173,11 @@ h3 {
       position: absolute;
       width: 200px;
       top: 0;
-      left: 0; } }
+      left: 0;
+      bottom: 0px;
+      overflow: hidden; } }
+  .left-column > * + * {
+    margin-top: 1em; }
 
 .right-column {
   position: relative;
@@ -2199,6 +2203,19 @@ h3 {
     padding-right: 0;
     line-height: 2em;
     background: transparent; }
+
+.search-results {
+  position: absolute;
+  bottom: 0;
+  top: 80px;
+  overflow-y: auto; }
+  .search-results ul {
+    margin-left: 0; }
+  .search-results li {
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-right: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
 
 .pills {
   -webkit-user-select: none;

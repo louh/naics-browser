@@ -10,6 +10,7 @@
   // If no query string, display an intro page w/ a link to random?
 
   var NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
+  var NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?' //year=2012&terms=Interne'
 
   // q?year=2012&code=519120
 
@@ -26,6 +27,12 @@
       } else {
         document.getElementById('frontpage').style.display = 'block'
       }
+
+      $('#search-form').submit(function (e) {
+        e.preventDefault()
+        var terms = $('#search-input').val()
+        getSearchResults(terms)
+      })
     },
 
     _getNAICSRequest: function () {
@@ -237,6 +244,32 @@
   $(document).ready(function() {
     page.init()
   })
+
+  function getSearchResults (terms, year) {
+    var yr = year || '2012'
+    $.ajax({
+      url: NAICS_SEARCH_API + 'year=' + yr + '&terms=' + encodeURIComponent(terms),
+      dataType: 'json',
+      success: function (response) {
+        displaySearchResults(response)
+      },
+      error: function (jqxhr, status, error) {
+        page.displayError(jqxhr, status, error)
+      }
+    })
+  }
+
+  function displaySearchResults (response, year) {
+    var yr = year || '2012'
+    var $el = $('.search-results-list')
+    response.sort(function (a, b) {
+      return a.code > b.code
+    })
+    for (var i = 0, j = response.length; i < j; i++) {
+      var item = response[i]
+      $el.append('<li><a href="?year=' + yr + '&code=' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
+    }
+  }
 
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')
   var naicsSelectorPills = naicsSelectorEl.querySelectorAll('.pill')

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  // NAICS VIEWER
+  // NAICS BROWSER
 
   // Look for a query string indicating NAICS code.
   // If found, display it.
@@ -173,7 +173,7 @@
       $('#frontpage').hide()
 
       // Set document title
-      document.title = record.code + ' ' + record.title + ' – ' + record.year + ' NAICS Viewer'
+      document.title = record.code + ' ' + record.title + ' – ' + record.year + ' NAICS Browser'
 
       // Parse record and insert HTML
       if (record.crossrefs) {

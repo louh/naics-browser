@@ -2160,6 +2160,11 @@ h1 {
   h1 a, h1 a:hover, h1 a:active, h1 a:visited {
     color: inherit; }
 
+h2 {
+  font-size: 2.3rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; }
+
 h3 {
   font-size: 1.5rem;
   font-weight: 400; }
@@ -2177,7 +2182,8 @@ h3 {
       bottom: 0px;
       overflow: hidden; } }
   .left-column > * + * {
-    margin-top: 1em; }
+    margin-top: 1em;
+    margin-bottom: 0; }
 
 .right-column {
   position: relative;

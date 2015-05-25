@@ -32,11 +32,11 @@ gulp.task('watch', function () {
 
 gulp.task('styles', function () {
   return gulp.src('./stylesheets/styles.scss')
-    //.pipe(plumber())
+    .pipe(plumber())
     .pipe(sass({ errLogToConsole: true }))
     .pipe(autoprefix('last 2 versions'))
-    //.pipe(cssimport())
-    //.pipe(minifyCSS({ keepSpecialComments: 0 }))
+    .pipe(cssimport())
+    .pipe(minifyCSS({ keepSpecialComments: 0 }))
     .pipe(debug({ minimal: false }))
     .pipe(gulp.dest('./stylesheets'))
 })

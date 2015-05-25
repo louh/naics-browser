@@ -48,11 +48,16 @@ a {
   @media #{$medium-up} {
     position: fixed;
     top: 3em;
-    left: 6em;
-    right: 6em;
+    left: 3em;
+    right: 3em;
     bottom: 3em;
     padding: 0;
     overflow: hidden;
+  }
+
+  @media #{$large-up} {
+    left: 6em;
+    right: 6em;
   }
 }
 

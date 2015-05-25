@@ -2137,11 +2137,15 @@ a {
     .viewport {
       position: fixed;
       top: 3em;
-      left: 6em;
-      right: 6em;
+      left: 3em;
+      right: 3em;
       bottom: 3em;
       padding: 0;
       overflow: hidden; } }
+  @media only screen and (min-width:64.063em) {
+    .viewport {
+      left: 6em;
+      right: 6em; } }
 
 .note {
   font-size: 90%;

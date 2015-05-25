@@ -28,5 +28,11 @@
     "gulp-watch": "~4.2.x",
     "http-server": "~0.8.x",
     "standard": "^3.7.2"
+  },
+  "standard": {
+    "ignore": [
+      "**/vendor/**",
+      "js/plugins.js"
+    ]
   }
 }

@@ -36,12 +36,13 @@
       getSearchResults(terms, year)
     })
 
-    // What is the page doing?
     router()
   }
 
   function router () {
-    params = getQueryStringParams()
+    if (!params) {
+      params = getQueryStringParams()
+    }
 
     if (params.year && params.code) {
       hideFrontPage()
@@ -50,42 +51,13 @@
     } else {
       reset()
     }
-
-    /*
-    switch (page) {
-      case 'about':
-        aboutOpenInstantaneously()
-        break
-      case 'latlng':
-        if (!values) {
-          reset()
-          break
-        }
-        var lat = parseFloat(values.split(',')[0])
-        var lng = parseFloat(values.split(',')[1])
-        if (!lat || !lng) {
-          reset()
-        } else {
-          goToLatLng(lat, lng)
-        }
-        break
-      case 'address':
-        if (!values) {
-          reset()
-        } else {
-          goToAddress(decodeURIComponent(values))
-        }
-        break
-      default:
-        reset()
-        break
-    }*/
   }
 
   // Listen for history changes
   window.onpopstate = function (event) {
     // This event will fire on initial page load for Safari and old Chrome
     // So lack of state does not necessarily mean reset, depend on router here
+    console.log(event)
     if (!event.state) {
       router()
       return
@@ -311,7 +283,18 @@
     })
     for (var i = 0, j = response.length; i < j; i++) {
       var item = response[i]
-      $el.append('<li><a href="?year=' + yr + '&code=' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
+      var url = '?year=' + yr + '&code=' + item.code
+      $el.append('<li><a href="' + url + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
+    }
+
+    // Attach event listeners
+    if (Modernizr.history) {
+      $('.search-results-list a').each(function (el) {
+        $(this).on('click', function (event) {
+          event.preventDefault()
+          window.history.pushState(params, null, url)
+        })
+      })
     }
   }
 

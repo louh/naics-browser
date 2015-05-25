@@ -3,7 +3,6 @@
 var gulp = require('gulp')
 
 var autoprefix = require('gulp-autoprefixer')
-var cssimport = require('gulp-cssimport')
 var debug = require('gulp-debug')
 var livereload = require('gulp-livereload')
 var minifyCSS = require('gulp-minify-css')
@@ -35,7 +34,6 @@ gulp.task('styles', function () {
     .pipe(plumber())
     .pipe(sass({ errLogToConsole: true }))
     .pipe(autoprefix('last 2 versions'))
-    .pipe(cssimport())
     .pipe(minifyCSS({ keepSpecialComments: 0 }))
     .pipe(debug({ minimal: false }))
     .pipe(gulp.dest('./stylesheets'))

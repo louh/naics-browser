@@ -20,7 +20,6 @@
     "gulp-cssimport": "~1.3.x",
     "gulp-debug": "~2.0.x",
     "gulp-livereload": "~3.8.x",
-    "gulp-minify-css": "~1.1.x",
     "gulp-order": "~1.1.1",
     "gulp-plumber": "~1.0.x",
     "gulp-sass": "~1.1.0",

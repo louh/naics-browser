@@ -12,6 +12,7 @@
   var NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
   var NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
   var DEFAULT_YEAR = '2012'
+  var LOADING_TIME_DELAY = 200
 
   var params
 
@@ -26,9 +27,6 @@
       e.preventDefault()
       var terms = $('#search-input').val().trim()
       var year = params.year
-      // TODO: separate out
-      clearSearch()
-      showSearchLoading()
       addParam('terms', terms)
       getSearchResults(terms, year)
     })
@@ -45,17 +43,11 @@
     var year = params.year || DEFAULT_YEAR
 
     if (params.code) {
-      // TODO: separate
-      clearView()
-      showLoading()
-      getNAICSRecord(params.code, DEFAULT_YEAR)
+      loadRecord(params.code, DEFAULT_YEAR)
       routed = true
     }
 
     if (params.terms) {
-      // TODO: Separate
-      clearSearch()
-      showSearchLoading()
       getSearchResults(params.terms, DEFAULT_YEAR)
       routed = true
     }
@@ -142,6 +134,12 @@
         async: true,
         dataType: 'json',
         success: function (response) {
+          // Check if part of range
+          if (response.part_of_range) {
+            getNAICSRecord(response.part_of_range, year)
+            return
+          }
+
           params.twoDigit = getTwoDigitCode(response.code)
           displayNAICSRecord(response)
         },
@@ -303,6 +301,9 @@
       year = DEFAULT_YEAR
     }
 
+    clearSearch()
+    showSearchLoading()
+
     $.ajax({
       url: NAICS_SEARCH_API + 'year=' + year + '&terms=' + encodeURIComponent(terms),
       dataType: 'json',
@@ -377,11 +378,16 @@
   //  UI
   // --------------------
 
+  var loadingTimer
+
   function showLoading () {
-    document.getElementById('loading').style.display = 'block'
+    loadingTimer = setTimeout(function () {
+      document.getElementById('loading').style.display = 'block'
+    }, LOADING_TIME_DELAY)
   }
 
   function hideLoading () {
+    clearTimeout(loadingTimer)
     document.getElementById('loading').style.display = 'none'
   }
 

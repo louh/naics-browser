@@ -12,15 +12,7 @@
   var NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
   var NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
 
-  // q?year=2012&code=519120
-
-  var params = {
-    year: 2012,
-    code: null,
-    terms: null,
-    extra: null,
-    twoDigit: null
-  }
+  var params
 
   function init () {
     // Force initial page load to have a triggered onpopstate
@@ -31,8 +23,9 @@
     // Set up search form
     $('#search-form').submit(function (e) {
       e.preventDefault()
-      var terms = $('#search-input').val()
+      var terms = $('#search-input').val().trim()
       var year = params.year
+      addParam('terms', terms)
       getSearchResults(terms, year)
     })
 
@@ -40,12 +33,12 @@
   }
 
   function router () {
-    if (!params) {
+    if (typeof params !== 'object') {
       params = getQueryStringParams()
     }
 
     if (params.year && params.code) {
-      hideFrontPage()
+      clearUI()
       showLoading()
       getNAICSRecord(params.year, params.code)
     } else {
@@ -55,9 +48,9 @@
 
   // Listen for history changes
   window.onpopstate = function (event) {
+    console.log(event)
     // This event will fire on initial page load for Safari and old Chrome
     // So lack of state does not necessarily mean reset, depend on router here
-    console.log(event)
     if (!event.state) {
       router()
       return
@@ -94,8 +87,12 @@
         var keyValue = query.split('=')
         request[keyValue[0]] = keyValue[1]
       }
-      return request
     }
+    return request
+  }
+
+  function addParam (key, value) {
+    params[key] = value
   }
 
   function getNAICSRecord (year, code) {
@@ -263,11 +260,19 @@
 
   function getSearchResults (terms, year) {
     var yr = year || '2012'
+
+    showSearchLoading()
+
     $.ajax({
       url: NAICS_SEARCH_API + 'year=' + yr + '&terms=' + encodeURIComponent(terms),
       dataType: 'json',
       success: function (response) {
-        displaySearchResults(response)
+        hideSearchLoading()
+        if (response.length > 0) {
+          displaySearchResults(response)
+        } else {
+          displayNoSearchResults(terms)
+        }
       },
       error: function (jqxhr, status, error) {
         displayError(jqxhr, status, error)
@@ -278,6 +283,7 @@
   function displaySearchResults (response, year) {
     var yr = year || '2012'
     var $el = $('.search-results-list')
+    $el.empty()
     response.sort(function (a, b) {
       return a.code > b.code
     })
@@ -292,10 +298,16 @@
       $('.search-results-list a').each(function (el) {
         $(this).on('click', function (event) {
           event.preventDefault()
-          window.history.pushState(params, null, url)
+          window.history.pushState(params, null, this.href)
         })
       })
     }
+  }
+
+  function displayNoSearchResults (query) {
+    var $el = $('.search-results-list')
+    $el.empty()
+    $el.append('<li>No results found for <strong>' + query + '</strong>.</li>')
   }
 
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')
@@ -325,6 +337,14 @@
     document.getElementById('loading').style.display = 'none'
   }
 
+  function showSearchLoading () {
+    document.getElementById('search-loading').style.display = 'block'
+  }
+
+  function hideSearchLoading () {
+    document.getElementById('search-loading').style.display = 'none'
+  }
+
   function showFrontPage () {
     document.getElementById('frontpage').style.display = 'block'
   }
@@ -333,8 +353,13 @@
     document.getElementById('frontpage').style.display = 'none'
   }
 
-  function reset () {
+  function clearUI () {
     hideLoading()
+    hideFrontPage()
+  }
+
+  function reset () {
+    clearUI()
     showFrontPage()
   }
 

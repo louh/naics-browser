@@ -11,6 +11,7 @@
 
   var NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
   var NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
+  var DEFAULT_YEAR = '2012'
 
   var params
 
@@ -25,6 +26,8 @@
       e.preventDefault()
       var terms = $('#search-input').val().trim()
       var year = params.year
+      clearSearch()
+      showSearchLoading()
       addParam('terms', terms)
       getSearchResults(terms, year)
     })
@@ -37,11 +40,24 @@
       params = getQueryStringParams()
     }
 
-    if (params.year && params.code) {
-      clearUI()
+    var routed = false
+    var year = params.year || DEFAULT_YEAR
+
+    if (params.code) {
+      clearView()
       showLoading()
-      getNAICSRecord(params.year, params.code)
-    } else {
+      getNAICSRecord(params.code, DEFAULT_YEAR)
+      routed = true
+    }
+
+    if (params.terms) {
+      clearSearch()
+      showSearchLoading()
+      getSearchResults(params.terms, DEFAULT_YEAR)
+      routed = true
+    }
+
+    if (!routed) {
       reset()
     }
   }
@@ -91,11 +107,43 @@
     return request
   }
 
-  function addParam (key, value) {
-    params[key] = value
+  function makeHTTPQueryString () {
+    // Turns params into query string
+    var string = '?'
+    var paramStrings = []
+
+    // global params
+    if (params.year) {
+      paramStrings.push('year=' + params.year)
+    }
+    if (params.code) {
+      paramStrings.push('code=' + params.code)
+    }
+    if (params.terms) {
+      paramStrings.push('terms=' + encodeURIComponent(params.terms))
+    }
+
+    return string + paramStrings.join('&')
   }
 
-  function getNAICSRecord (year, code) {
+  function addParam (key, value) {
+    // Add to global params object
+    params[key] = value
+
+    // Add to URL string
+    var queryString = makeHTTPQueryString()
+
+    // Push state to history
+    if (Modernizr.history) {
+      window.history.pushState(params, null, window.location.href.split('?')[0] + queryString)
+    }
+  }
+
+  function getNAICSRecord (code, year) {
+    if (typeof year === 'undefined') {
+      year = DEFAULT_YEAR
+    }
+
     $.when(
       $.ajax({
         url: NAICS_API + 'year=' + year + '&code=' + code,
@@ -259,12 +307,12 @@
   }
 
   function getSearchResults (terms, year) {
-    var yr = year || '2012'
-
-    showSearchLoading()
+    if (typeof year === 'undefined') {
+      year = DEFAULT_YEAR
+    }
 
     $.ajax({
-      url: NAICS_SEARCH_API + 'year=' + yr + '&terms=' + encodeURIComponent(terms),
+      url: NAICS_SEARCH_API + 'year=' + year + '&terms=' + encodeURIComponent(terms),
       dataType: 'json',
       success: function (response) {
         hideSearchLoading()
@@ -281,15 +329,18 @@
   }
 
   function displaySearchResults (response, year) {
-    var yr = year || '2012'
+    if (typeof year === 'undefined') {
+      year = DEFAULT_YEAR
+    }
+
     var $el = $('.search-results-list')
-    $el.empty()
+
     response.sort(function (a, b) {
       return a.code > b.code
     })
     for (var i = 0, j = response.length; i < j; i++) {
       var item = response[i]
-      var url = '?year=' + yr + '&code=' + item.code
+      var url = '?year=' + year + '&code=' + item.code
       $el.append('<li><a href="' + url + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
     }
 
@@ -306,7 +357,6 @@
 
   function displayNoSearchResults (query) {
     var $el = $('.search-results-list')
-    $el.empty()
     $el.append('<li>No results found for <strong>' + query + '</strong>.</li>')
   }
 
@@ -353,13 +403,20 @@
     document.getElementById('frontpage').style.display = 'none'
   }
 
-  function clearUI () {
+  function clearView () {
     hideLoading()
     hideFrontPage()
   }
 
+  function clearSearch () {
+    hideSearchLoading()
+    var $el = $('.search-results-list')
+    $el.empty()
+  }
+
   function reset () {
-    clearUI()
+    clearView()
+    clearSearch()
     showFrontPage()
   }
 

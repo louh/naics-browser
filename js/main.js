@@ -26,6 +26,7 @@
       e.preventDefault()
       var terms = $('#search-input').val().trim()
       var year = params.year
+      // TODO: separate out
       clearSearch()
       showSearchLoading()
       addParam('terms', terms)
@@ -44,6 +45,7 @@
     var year = params.year || DEFAULT_YEAR
 
     if (params.code) {
+      // TODO: separate
       clearView()
       showLoading()
       getNAICSRecord(params.code, DEFAULT_YEAR)
@@ -51,6 +53,7 @@
     }
 
     if (params.terms) {
+      // TODO: Separate
       clearSearch()
       showSearchLoading()
       getSearchResults(params.terms, DEFAULT_YEAR)
@@ -63,6 +66,7 @@
   }
 
   // Listen for history changes
+  // TODO: Is this working?
   window.onpopstate = function (event) {
     console.log(event)
     // This event will fire on initial page load for Safari and old Chrome
@@ -72,20 +76,6 @@
       return
     } else {
       console.log(event.state)
-      switch (event.state.page) {
-        case 'about':
-          // Do stuff
-          break
-        case 'latlng':
-          // Do stuff
-          break
-        case 'address':
-          // Do stuff
-          break
-        default:
-          reset()
-          break
-      }
     }
   }
 
@@ -139,11 +129,13 @@
     }
   }
 
-  function getNAICSRecord (code, year) {
-    if (typeof year === 'undefined') {
-      year = DEFAULT_YEAR
-    }
+  function loadRecord (code, year) {
+    clearView()
+    showLoading()
+    getNAICSRecord(code, year)
+  }
 
+  function getNAICSRecord (code, year) {
     $.when(
       $.ajax({
         url: NAICS_API + 'year=' + year + '&code=' + code,
@@ -338,10 +330,11 @@
     response.sort(function (a, b) {
       return a.code > b.code
     })
+
     for (var i = 0, j = response.length; i < j; i++) {
       var item = response[i]
       var url = '?year=' + year + '&code=' + item.code
-      $el.append('<li><a href="' + url + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
+      $el.append('<li><a href="' + url + '" data-year="' + year + '" data-code="' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
     }
 
     // Attach event listeners
@@ -349,7 +342,12 @@
       $('.search-results-list a').each(function (el) {
         $(this).on('click', function (event) {
           event.preventDefault()
-          window.history.pushState(params, null, this.href)
+          var newParams = {
+            year: $(this).data('year'),
+            code: $(this).data('code')
+          }
+          window.history.pushState(newParams, null, this.href)
+          loadRecord(newParams.code, newParams.year)
         })
       })
     }
@@ -404,6 +402,7 @@
   }
 
   function clearView () {
+    document.getElementById('view').innerHTML = ''
     hideLoading()
     hideFrontPage()
   }

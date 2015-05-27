@@ -27,6 +27,13 @@
       e.preventDefault()
       var terms = $('#search-input').val().trim()
       var year = params.year
+
+      if (!terms) {
+        clearSearch()
+        displayNoSearchResults()
+        return
+      }
+
       addParam('terms', terms)
       getSearchResults(terms, year)
     })
@@ -289,7 +296,7 @@
       if (x > 0) {
         var codeRegexp = new RegExp(crossref.code + '.+(?=[.;])', 'g')
         crossref.text = crossref.text.replace(codeRegexp, '$&</a>')
-        crossref.text = crossref.text.replace(/((U.S. )?Industry)|((Subs|S)ector)/g, '<a href="?year=' + params.year + '&code=' + crossref.code + '">$&')
+        crossref.text = crossref.text.replace(/((U.S. )?Industry)|((Subs|S)ector)/g, '<a href="?year=' + params.year + '&code=' + crossref.code + '" class="naics-link" data-year="' + params.year +'" data-code="' + crossref.code + '">$&')
       }
     }
 
@@ -335,28 +342,17 @@
     for (var i = 0, j = response.length; i < j; i++) {
       var item = response[i]
       var url = '?year=' + year + '&code=' + item.code
-      $el.append('<li><a href="' + url + '" data-year="' + year + '" data-code="' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
-    }
-
-    // Attach event listeners
-    if (Modernizr.history) {
-      $('.search-results-list a').each(function (el) {
-        $(this).on('click', function (event) {
-          event.preventDefault()
-          var newParams = {
-            year: $(this).data('year'),
-            code: $(this).data('code')
-          }
-          window.history.pushState(newParams, null, this.href)
-          loadRecord(newParams.code, newParams.year)
-        })
-      })
+      $el.append('<li><a href="' + url + '" class="naics-link" data-year="' + year + '" data-code="' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
     }
   }
 
   function displayNoSearchResults (query) {
     var $el = $('.search-results-list')
-    $el.append('<li>No results found for <strong>' + query + '</strong>.</li>')
+    if (query) {
+      $el.append('<li>No results found for <strong>' + query + '</strong>.</li>')
+    } else {
+      $el.append('<li>No search terms were provided.</li>')
+    }
   }
 
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')
@@ -431,5 +427,19 @@
 
   $(document).ready(function () {
     init()
+
+    // Attach event listeners
+    if (Modernizr.history) {
+      $('body').on('click', '.naics-link', function (e) {
+        e.preventDefault()
+        var anchor = $(this)
+        var newParams = {
+          year: anchor.data('year'),
+          code: anchor.data('code')
+        }
+        window.history.pushState(newParams, null, this.href)
+        loadRecord(newParams.code, newParams.year)
+      })
+    }
   })
 }())

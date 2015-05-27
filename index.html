@@ -94,7 +94,7 @@
           <div class='naics-description'>
             <% if (typeof description_code !== 'undefined') { %>
               <p>
-                <a href='?year=<%= year %>&code=<%= description_code %>'><%= description[0] %></a>
+                <a href='?year=<%= year %>&code=<%= description_code %>' class='naics-link' data-year='<%= year %>' data-code='<%= description_code %>'><%= description[0] %></a>
               </p>
             <% } else { %>
               <% for (var paragraph in description) { %>

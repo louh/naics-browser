@@ -3,12 +3,20 @@ import './App.css'
 import Search from './Search'
 
 class App extends Component {
-  render() {
+  constructor () {
+    super()
+
+    this.state = {
+      year: 2012 // TODO: don't hardcode
+    }
+  }
+
+  render () {
     return (
       <div role="main" className="viewport">
         <div className="left-column">
           <h1><a href="?">NAICS Browser</a></h1>
-          <Search />
+          <Search year={this.state.year} />
         </div>
         <div className="right-column">
           <div id="frontpage">
@@ -48,7 +56,6 @@ class App extends Component {
 
 // <div className="App">
 //   <div className="App-header">
-//     <img src={logo} className="App-logo" alt="logo" />
 //     <h2>Welcome to React</h2>
 //   </div>
 //   <p className="App-intro">

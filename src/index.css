@@ -1,5 +1,28 @@
-body {
+/* RESETS */
+* {
+  box-sizing: border-box;
+}
+
+/* LAYOUT */
+body,
+html {
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+body {
+  color: #494949;
+  background-color: #f2f6fa;
+}
+
+a {
+  color: #368fc8;
+  line-height: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

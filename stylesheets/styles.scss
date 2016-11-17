@@ -17,28 +17,6 @@ $accent-font: 'Montserrat', sans-serif;
 // RESPONSIVE BREAKPOINTS
 $medium-up: 'only screen and (min-width: 40.063em)';
 
-// RESETS
-* {
-  box-sizing: border-box;
-}
-
-// LAYOUT
-body, html {
-  height: 100%;
-}
-
-body {
-  color: #494949;
-  font-weight: 400;
-}
-
-a {
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 .viewport {
   padding-top: 1em;
   padding-left: 1em;
@@ -91,6 +69,7 @@ h1 {
   a:active,
   a:visited {
     color: inherit;
+    text-decoration: none;
   }
 }
 
@@ -160,11 +139,14 @@ h3 {
 
   ul {
     margin-left: 0;
+    padding: 0;
+    list-style-type: none;
   }
   li {
     padding-top: 0.1em;
     padding-bottom: 0.1em;
     padding-right: 20px;
+    line-height: 1.6;
     border-bottom: 1px solid rgba(0,0,0,0.10);
   }
   li:last-of-type {
@@ -172,9 +154,12 @@ h3 {
   }
 }
 
+.search-message {
+  margin-top: 1em;
+}
+
 .search-loading {
   font-size: 12px;
-  display: none;
 }
 
 .pills {

@@ -16,9 +16,20 @@ class Search extends React.Component {
     }
 
     this.getSearchResults = this.getSearchResults.bind(this)
-    this.displaySearchResults = this.displaySearchResults.bind(this)
+    this.renderSearchResults = this.renderSearchResults.bind(this)
     this.onChangeSearchInput = this.onChangeSearchInput.bind(this)
     this.onSubmitSearch = this.onSubmitSearch.bind(this)
+  }
+
+  componentDidMount () {
+    if (this.props.terms) {
+      this.setState({
+        searchInput: this.props.terms
+      })
+      this.onSubmitSearch()
+    } else {
+      this.input.focus()
+    }
   }
 
   getSearchResults (terms, year) {
@@ -56,7 +67,7 @@ class Search extends React.Component {
       })
   }
 
-  displaySearchResults () {
+  renderSearchResults () {
     const results = this.state.searchResults
     const year = this.props.year
 
@@ -65,7 +76,7 @@ class Search extends React.Component {
 
       return (
         <li key={result.code}>
-          <a href={url} className="naics-link">
+          <a href={url} className="naics-link" onClick={this.onClickResult}>
             {result.code} &ndash; {result.title}
           </a>
         </li>
@@ -109,6 +120,11 @@ class Search extends React.Component {
     this.getSearchResults(terms, year)
   }
 
+  onClickResult (event) {
+    event.preventDefault()
+
+  }
+
   render () {
     let results
 
@@ -123,7 +139,7 @@ class Search extends React.Component {
       if (this.state.searchResults.length > 0) {
         results = (
           <div className="search-results">
-            <ul className="search-results-list">{this.displaySearchResults()}</ul>
+            <ul className="search-results-list">{this.renderSearchResults()}</ul>
           </div>
         )
       } else {
@@ -152,7 +168,12 @@ class Search extends React.Component {
             onSubmit={this.onSubmitSearch}
             onChange={this.onChangeSearchInput}
           >
-            <input id="search-input" type="text" placeholder="search" />
+            <input
+              id="search-input"
+              type="text"
+              placeholder="search"
+              ref={(ref) => { this.input = ref }}
+            />
           </form>
         </div>
 
@@ -163,7 +184,8 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  year: React.PropTypes.number.isRequired
+  year: React.PropTypes.number.isRequired,
+  terms: React.PropTypes.string
 }
 
 export default Search

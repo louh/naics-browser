@@ -138,8 +138,7 @@ h3 {
   overflow-y: auto;
 
   ul {
-    margin-left: 0;
-    margin-top: 0;
+    margin: 0;
     padding: 0;
     list-style-type: none;
   }
@@ -178,6 +177,7 @@ h3 {
   user-select: none;
   margin-left: 0;
   margin-top: 1em;
+  padding-left: 0;
 
   .pill {
     display: inline-block;

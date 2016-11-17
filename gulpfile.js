@@ -24,7 +24,7 @@ gulp.task('watch', function () {
   })
 
   // Watch for changes to compiled CSS and reload browser
-  watch('./stylesheets/styles.css')
+  watch('./public/styles/styles.css')
     .pipe(plumber())
     .pipe(livereload())
 })
@@ -36,5 +36,5 @@ gulp.task('styles', function () {
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS({ keepSpecialComments: 0 }))
     .pipe(debug({ minimal: false }))
-    .pipe(gulp.dest('./stylesheets'))
+    .pipe(gulp.dest('./public/styles'))
 })

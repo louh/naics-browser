@@ -1,0 +1,28 @@
+.pills {
+  user-select: none;
+  margin-left: 0;
+  margin-top: 1em;
+  padding-left: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.pill {
+  display: inline-block;
+  padding: 2px 12px;
+  margin: 0;
+  border: 2px solid #3c3d3e;
+  border-radius: 3px;
+  font-weight: 600;
+  background-color: transparent;
+  color: #3c3d3e;
+  cursor: pointer;
+}
+
+.pill + .pill {
+  margin-left: 0.25em;
+}
+
+.pill-selected {
+  background-color: #3c3d3e;
+  color: white;
+}

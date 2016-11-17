@@ -113,31 +113,6 @@ h3 {
   }
 }
 
-.pills {
-  user-select: none;
-  margin-left: 0;
-  margin-top: 1em;
-  padding-left: 0;
-
-  .pill {
-    display: inline-block;
-    padding: 2px 12px;
-    margin: 0;
-    border: 2px solid #3c3d3e;
-    font-weight: 600;
-    cursor: pointer;
-    background-color: transparent;
-    color: #3c3d3e;
-  }
-  .pill + .pill {
-    margin-left: 0.25em;
-  }
-  .pill-selected {
-    background-color: #3c3d3e;
-    color: white;
-  }
-}
-
 #record {
   position: absolute;
   left: 0;

@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import './App.css'
 import Search from './Search'
+import YearSelector from './YearSelector'
 
 class App extends Component {
   constructor () {
     super()
 
     this.state = {
-      year: 2012 // TODO: don't hardcode
+      year: 2012 // TODO: Set this state from params
     }
+
+    this.selectYear = this.selectYear.bind(this)
+  }
+
+  selectYear (year) {
+    this.setState({ year })
   }
 
   render () {
@@ -32,10 +39,7 @@ class App extends Component {
               For a sample NAICS code, <a href="?year=2012&code=519120">take a look at this one.</a>
             </p>
 
-            <ul className="pills js-naics-year-select">
-              <li className="naics-year pill">2007</li>
-              <li className="naics-year pill pill-selected">2012</li>
-            </ul>
+            <YearSelector year={this.state.year} selectYear={this.selectYear} />
           </div>
 
           <div id="message">

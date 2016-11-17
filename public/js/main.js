@@ -286,21 +286,6 @@
     return record.crossrefs
   }
 
-  var naicsSelectorEl = document.querySelector('.js-naics-year-select')
-  var naicsSelectorPills = naicsSelectorEl.querySelectorAll('.pill')
-  for (var i = 0, j = naicsSelectorPills.length; i < j; i++) {
-    var pill = naicsSelectorPills[i]
-    pill.addEventListener('click', pillSelected, false)
-  }
-
-  function pillSelected (event) {
-    for (var i = 0, j = naicsSelectorPills.length; i < j; i++) {
-      var pill = naicsSelectorPills[i]
-      pill.classList.remove('pill-selected')
-    }
-    event.target.classList.add('pill-selected')
-  }
-
   // --------------------
   //  UI
   // --------------------

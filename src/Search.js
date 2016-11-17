@@ -1,4 +1,5 @@
 import React from 'react'
+import './Search.css'
 
 const NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
 
@@ -76,7 +77,7 @@ class Search extends React.Component {
 
       return (
         <li key={result.code}>
-          <a href={url} className="naics-link" onClick={this.onClickResult}>
+          <a href={url} onClick={this.onClickResult}>
             {result.code} &ndash; {result.title}
           </a>
         </li>

@@ -8,7 +8,7 @@ $lightgray: #d9d9d9;
 // TYPOGRAPHY
 
 $body-font: 'Source Sans Pro', sans-serif;
-$accent-font: 'Montserrat', sans-serif;
+$accent-font: 'Helvetica Neue', sans-serif;
 
 // IMPORTS
 @import 'settings';
@@ -113,66 +113,6 @@ h3 {
   }
 }
 
-.search-box {
-  margin-top: 0.5em;
-}
-
-.search-box input {
-  width: 100%;
-  border: 0;
-  border-bottom: 1px solid rgba(0,0,0,0.10);
-  padding: 0.05em 0.25em;
-  line-height: 2em;
-  background-color: white;
-}
-
-.search-box input:focus {
-  outline: 1px solid #61a9d8;
-}
-
-.search-results {
-  position: absolute;
-  bottom: 0;
-  top: 165px;
-  width: 100%;
-  overflow-y: auto;
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-
-  li {
-    line-height: 1.6;
-    border-bottom: 1px solid rgba(0,0,0,0.10);
-  }
-
-  li:last-of-type {
-    border-bottom: 0;
-  }
-
-  a {
-    display: block;
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
-    padding-right: 20px;
-  }
-
-  a:hover {
-    text-decoration: none;
-    background-color: rgba(0,0,0,0.02);
-  }
-}
-
-.search-message {
-  margin-top: 1em;
-}
-
-.search-loading {
-  font-size: 12px;
-}
-
 .pills {
   user-select: none;
   margin-left: 0;
@@ -215,7 +155,7 @@ h3 {
 
 .crumbs {
   font-family: $accent-font;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1em;
   color: rgba(92,92,92,0.5);
   line-height: 1.1;
@@ -270,63 +210,7 @@ table {
   background-color: #f2f6fa;
 }
 
-.loading {
-  display: none;
-}
-.loading-spinner {
-  margin: 6em auto;
-  font-size: 1em;
-  position: relative;
-  text-indent: -9999em;
-  border-top: 0.8em solid rgba(192, 192, 192, 0.2);
-  border-right: 0.8em solid rgba(192, 192, 192, 0.2);
-  border-bottom: 0.8em solid rgba(192, 192, 192, 0.2);
-  border-left: 0.8em solid #ffffff;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation: spinner 1.1s infinite linear;
-  animation: spinner 1.1s infinite linear;
-}
-.loading-spinner,
-.loading-spinner:after {
-  border-radius: 50%;
-  width: 6em;
-  height: 6em;
-}
-@-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-.loading-message {
-  text-align: center;
-}
-
 .error {
   font-weight: bold;
   color: red;
-}
-
-.browsehappy {
-  background-color: #ffffef;
-  margin: 0;
-  padding: 5px 20px;
-  border-bottom: 1px solid lightgray;
-  z-index: 9999;
 }

@@ -10,7 +10,6 @@
   // If no query string, display an intro page w/ a link to random?
 
   var NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
-  var NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
   var DEFAULT_YEAR = '2012'
   var LOADING_TIME_DELAY = 200
 
@@ -21,22 +20,6 @@
     if (Modernizr.history) {
       window.history.replaceState(null, null, document.URL)
     }
-
-    // Set up search form
-    $('#search-form').submit(function (e) {
-      e.preventDefault()
-      var terms = $('#search-input').val().trim()
-      var year = params.year
-
-      if (!terms) {
-        clearSearch()
-        displayNoSearchResults()
-        return
-      }
-
-      addParam('terms', terms)
-      getSearchResults(terms, year)
-    })
 
     router()
   }
@@ -303,58 +286,6 @@
     return record.crossrefs
   }
 
-  function getSearchResults (terms, year) {
-    if (typeof year === 'undefined') {
-      year = DEFAULT_YEAR
-    }
-
-    clearSearch()
-    showSearchLoading()
-
-    $.ajax({
-      url: NAICS_SEARCH_API + 'year=' + year + '&terms=' + encodeURIComponent(terms),
-      dataType: 'json',
-      success: function (response) {
-        hideSearchLoading()
-        if (response.length > 0) {
-          displaySearchResults(response)
-        } else {
-          displayNoSearchResults(terms)
-        }
-      },
-      error: function (jqxhr, status, error) {
-        displayError(jqxhr, status, error)
-      }
-    })
-  }
-
-  function displaySearchResults (response, year) {
-    if (typeof year === 'undefined') {
-      year = DEFAULT_YEAR
-    }
-
-    var $el = $('.search-results-list')
-
-    response.sort(function (a, b) {
-      return a.code > b.code
-    })
-
-    for (var i = 0, j = response.length; i < j; i++) {
-      var item = response[i]
-      var url = '?year=' + year + '&code=' + item.code
-      $el.append('<li><a href="' + url + '" class="naics-link" data-year="' + year + '" data-code="' + item.code + '">' + item.code + ' &ndash; ' + item.title + '</a></li>')
-    }
-  }
-
-  function displayNoSearchResults (query) {
-    var $el = $('.search-results-list')
-    if (query) {
-      $el.append('<li>No results found for <strong>' + query + '</strong>.</li>')
-    } else {
-      $el.append('<li>No search terms were provided.</li>')
-    }
-  }
-
   var naicsSelectorEl = document.querySelector('.js-naics-year-select')
   var naicsSelectorPills = naicsSelectorEl.querySelectorAll('.pill')
   for (var i = 0, j = naicsSelectorPills.length; i < j; i++) {
@@ -387,14 +318,6 @@
     document.getElementById('loading').style.display = 'none'
   }
 
-  function showSearchLoading () {
-    document.getElementById('search-loading').style.display = 'block'
-  }
-
-  function hideSearchLoading () {
-    document.getElementById('search-loading').style.display = 'none'
-  }
-
   function showFrontPage () {
     document.getElementById('frontpage').style.display = 'block'
   }
@@ -407,12 +330,6 @@
     document.getElementById('view').innerHTML = ''
     hideLoading()
     hideFrontPage()
-  }
-
-  function clearSearch () {
-    hideSearchLoading()
-    var $el = $('.search-results-list')
-    $el.empty()
   }
 
   function reset () {

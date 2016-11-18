@@ -72,7 +72,7 @@ class App extends Component {
           </div>
 
           <p>
-            This is an alternative to the NAICS website hosted by the <a href="http://www.census.gov/eos/www/naics/index.html" target="_blank">US Census Bureau</a>. It uses <a href="http://naics.codeforamerica.org/" target="_blank">Code for America’s NAICS API</a> to provide a more user-friendly interface. The code is <a href="https://www.github.com/louh/naics-browser" target="_blank">open source</a>.
+            This is an alternative to the NAICS website hosted by the <a href="http://www.census.gov/eos/www/naics/index.html">US Census Bureau</a>. It uses <a href="http://naics.codeforamerica.org/">Code for America’s NAICS API</a> to provide a more user-friendly interface. The code is <a href="https://www.github.com/louh/naics-browser">open source</a>.
           </p>
 
           <p>

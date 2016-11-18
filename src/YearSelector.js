@@ -2,8 +2,8 @@ import React from 'react'
 import './YearSelector.css'
 
 class YearSelector extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.years = [2007, 2012]
   }

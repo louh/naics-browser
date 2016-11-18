@@ -51,8 +51,6 @@ class RecordView extends React.Component {
                   return (
                     <div className="naics-description">
                       {record.description.map((paragraph, index) => {
-                        console.log(paragraph)
-
                         // Make 'The Sector as a Whole' on top-level NAICS into a subtitle
                         if (record.code.toString().length === 2) {
                           if (paragraph === 'The Sector as a Whole') {

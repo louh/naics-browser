@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router'
 import './Search.css'
 
 const NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
 
 class Search extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
       searchInput: '',
@@ -99,16 +100,7 @@ class Search extends React.Component {
       return
     }
 
-    // addParam('terms', terms)
-
     this.getSearchResults(terms, year)
-  }
-
-  onClickResult (event, code) {
-    event.preventDefault()
-
-    // `code` is cast to a string so that values of `31-33` or `314910` are the same type
-    this.props.selectCode(String(code))
   }
 
   renderSearchResults () {
@@ -120,9 +112,9 @@ class Search extends React.Component {
 
       return (
         <li key={result.code}>
-          <a href={url} onClick={(e) => { this.onClickResult(e, result.code) }}>
+          <Link to={{ query: { year, code: result.code } }}>
             {result.code} &ndash; {result.title}
-          </a>
+          </Link>
         </li>
       )
     })

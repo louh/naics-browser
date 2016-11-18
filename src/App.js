@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import './App.css'
 import Search from './Search'
 import YearSelector from './YearSelector'
 import Record from './Record'
 
+const DEFAULT_YEAR = 2012
+
 class App extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
+
+    const initialState = this.getStateFromProps(props)
 
     this.state = {
-      year: 2012, // TODO: Set this state from params
-      code: null,
+      year: initialState.year,
+      code: initialState.code,
       recordTitle: null
     }
 
@@ -19,8 +24,30 @@ class App extends Component {
     this.selectCode = this.selectCode.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState(this.getStateFromProps(nextProps))
+  }
+
   componentDidUpdate () {
     this.setPageTitle()
+    // this.context.router.transitionTo(`?year=${this.props.year}&code=${this.props.code}`)
+  }
+
+  getStateFromProps (props) {
+    let year = DEFAULT_YEAR
+    if (props.location && props.location.query && props.location.query.year) {
+      year = Number(props.location.query.year)
+    }
+
+    let code = null
+    if (props.location && props.location.query && props.location.query.code) {
+      code = String(props.location.query.code)
+    }
+
+    return {
+      year,
+      code
+    }
   }
 
   setPageTitle () {
@@ -67,7 +94,7 @@ class App extends Component {
     return (
       <div role="main" className="viewport">
         <div className="left-column">
-          <h1><a href="?">NAICS Browser</a></h1>
+          <h1><Link to={{query: {}}}>NAICS Browser</Link></h1>
           <Search year={this.state.year} selectCode={this.selectCode} />
         </div>
         <div className="right-column">
@@ -76,6 +103,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+App.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default App;

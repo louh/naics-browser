@@ -7,8 +7,8 @@ const NAICS_API = 'http://naics.codeforamerica.org/v0/q?'
 const LOADING_TIME_DELAY = 200
 
 class Record extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
       isLoading: true,

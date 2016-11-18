@@ -76,7 +76,10 @@ class App extends Component {
           </p>
 
           <p>
-            For a sample NAICS code, <a href="?year=2012&code=519120">take a look at this one.</a>
+            For a sample NAICS code,
+            {' '}<Link to={{ query: { year: 2012, code: '519120' } }}>
+              take a look at this one.
+            </Link>
           </p>
 
           <YearSelector year={this.state.year} selectYear={this.selectYear} />

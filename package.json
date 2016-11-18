@@ -1,11 +1,12 @@
 {
-  "name": "naics-viewer",
-  "version": "1.0.0",
-  "description": "naics viewer",
+  "name": "naics-browser",
+  "version": "1.2.0",
+  "description": "naics browser",
   "private": true,
+  "homepage": "http://louh.github.io/naics-browser",
   "repository": {
     "type": "git",
-    "url": "https://github.com/louh/naics-viewer.git"
+    "url": "https://github.com/louh/naics-browser.git"
   },
   "author": "Lou Huang",
   "license": "MIT",

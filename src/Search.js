@@ -68,23 +68,6 @@ class Search extends React.Component {
       })
   }
 
-  renderSearchResults () {
-    const results = this.state.searchResults
-    const year = this.props.year
-
-    return results.map(result => {
-      const url = `?year=${year}code=${result.code}`
-
-      return (
-        <li key={result.code}>
-          <a href={url} onClick={this.onClickResult}>
-            {result.code} &ndash; {result.title}
-          </a>
-        </li>
-      )
-    })
-  }
-
   displayNoSearchResults (terms) {
     this.setState({
       lastSearchTerms: terms,
@@ -121,9 +104,28 @@ class Search extends React.Component {
     this.getSearchResults(terms, year)
   }
 
-  onClickResult (event) {
+  onClickResult (event, code) {
     event.preventDefault()
 
+    // `code` is cast to a string so that values of `31-33` or `314910` are the same type
+    this.props.selectCode(String(code))
+  }
+
+  renderSearchResults () {
+    const results = this.state.searchResults
+    const year = this.props.year
+
+    return results.map(result => {
+      const url = `?year=${year}&code=${result.code}`
+
+      return (
+        <li key={result.code}>
+          <a href={url} onClick={(e) => { this.onClickResult(e, result.code) }}>
+            {result.code} &ndash; {result.title}
+          </a>
+        </li>
+      )
+    })
   }
 
   render () {

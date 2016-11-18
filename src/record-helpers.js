@@ -1,5 +1,7 @@
-export function getTwoDigitCode (code) {
-  const twoDigitCodeRaw = parseInt(code.toString().substring(0, 2), 10)
+// @flow
+
+export function getTwoDigitCode (code: string) {
+  const twoDigitCodeRaw = parseInt(code.substring(0, 2), 10)
   let twoDigitCode
   let twoDigitTitle
 
@@ -73,13 +75,13 @@ export function getTwoDigitCode (code) {
 }
 
 /**
- * Parse crossrefs and make links to other codes.
+ * Parse crossref text.
  *
  * @param {Array} crossrefs - the original array is parsed and returned.
  * @param {Object} record - the original record object, used for reference only.
  * @returns {Array} crossrefs - the mutated array is returned.
  */
-export function parseCrossrefs (crossrefs, record) {
+export function parseCrossrefs (crossrefs: Array<Object>, record: Object) {
   if (!crossrefs) {
     return
   }

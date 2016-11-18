@@ -47,7 +47,6 @@ class Record extends React.Component {
           return
         }
 
-        // params.twoDigit = getTwoDigitCode(response.code)
         this.setNAICSRecord(record)
       })
       .catch(error => {

@@ -87,23 +87,9 @@ export function parseCrossrefs (crossrefs, record) {
   for (let i = 0, j = crossrefs.length; i < j; i++) {
     const crossref = crossrefs[i]
 
-    // Replace dashes
-    crossref.text = crossref.text.replace('--', '&mdash;')
-
-    // Add links
-    /*
-      Notes:
-      Preceding the code # may be words like 'Industry', 'Industry Group',
-      'U.S. Industry', 'Subsector', or 'Sector'
-      After the code # is the title, terminated by a semicolon or period.
-      Use this to figure out the actual length of the link text.
-    */
-    const x = crossref.text.indexOf(crossref.code)
-    if (x > 0) {
-      const codeRegexp = new RegExp(crossref.code + '.+(?=[.;])', 'g')
-      crossref.text = crossref.text.replace(codeRegexp, '$&</a>')
-      crossref.text = crossref.text.replace(/((U.S. )?Industry)|((Subs|S)ector)/g, `<a href="?year=${record.year}&code=${crossref.code}" class="naics-link" data-year="${record.year}" data-code="${crossref.code}">$&`)
-    }
+    // Replace dashes with em dash. Don't replace with an HTML entity, because
+    // React will render it literally.
+    crossref.text = crossref.text.replace('--', '—')
   }
 
   return crossrefs

@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router'
+import reactStringReplace from 'react-string-replace'
 import { parseCrossrefs } from './record-helpers'
 
 class RecordView extends React.Component {
@@ -96,9 +98,28 @@ class RecordView extends React.Component {
                     <ul>
                       {record.crossrefs.map((item, index) => {
                         // a crossref `item` is an object with two properties:
-                        // `code` and `text`. `text` has been parsed to include
-                        // links, so they are added with `dangerouslySetInnerHTML`
-                        return <li key={index} dangerouslySetInnerHTML={{ __html: item.text }} />
+                        // `code` and `text`. `text` will be parsed to include
+                        // links by replacing text with react-router <Link>s
+                        // `reactStringReplace` runs for every match, which
+                        // creates a bunch of problems, so only produce one
+                        // captured group.
+                        /*
+                          Notes:
+                          Preceding the code # may be words like 'Industry', 'Industry Group',
+                          'U.S. Industry', 'Subsector', or 'Sector'
+                          After the code # is the title, terminated by a semicolon or period.
+                          Use this to figure out the actual length of the link text.
+                        */
+                        const regexp = new RegExp('((?:(?:(?:U.S. )?Industry(?: Group)?)|(?:(?:Subs|S)ector))\\s+' + item.code + '.+(?=[.;]))', 'g')
+                        return (
+                          <li key={index}>
+                            {reactStringReplace(item.text, regexp, (match, i) => (
+                              <Link key={i} to={{ query: { year: record.year, code: item.code } }}>
+                                {match}
+                              </Link>
+                            ))}
+                          </li>
+                        )
                       })}
                     </ul>
                   </div>

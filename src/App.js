@@ -21,7 +21,6 @@ class App extends Component {
 
     this.setPageTitle = this.setPageTitle.bind(this)
     this.selectYear = this.selectYear.bind(this)
-    this.selectCode = this.selectCode.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -62,10 +61,6 @@ class App extends Component {
     this.setState({ year })
   }
 
-  selectCode (code) {
-    this.setState({ code })
-  }
-
   renderRightColumn () {
     if (this.state.year && this.state.code) {
       return <Record year={this.state.year} code={this.state.code} />
@@ -95,7 +90,7 @@ class App extends Component {
       <div role="main" className="viewport">
         <div className="left-column">
           <h1><Link to={{query: {}}}>NAICS Browser</Link></h1>
-          <Search year={this.state.year} selectCode={this.selectCode} />
+          <Search year={this.state.year} />
         </div>
         <div className="right-column">
           {this.renderRightColumn()}

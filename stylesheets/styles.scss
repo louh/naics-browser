@@ -128,9 +128,11 @@ h3 {
   font-family: $accent-font;
   font-weight: 600;
   font-size: 1em;
-  color: rgba(92,92,92,0.5);
+  color: rgba(92,92,92,0.65);
   line-height: 1.1;
   margin-bottom: 1em;
+  border-bottom: 4px solid;
+  padding-bottom: 0.25em;
 
   .naics-year {
     font-weight: 600;
@@ -145,7 +147,7 @@ h3 {
 }
 
 .naics-code {
-  color: rgba(92,92,92,0.5);
+  color: rgba(92,92,92,0.65);
   font-weight: 600;
 }
 

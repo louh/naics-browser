@@ -45,7 +45,9 @@ class RecordView extends React.Component {
                   return (
                     <div className="naics-description">
                       <p>
-                        <a href={`?year=${record.year}&code=${record.description_code}`} className="naics-link" data-year={record.year} data-code={record.description_code}>{record.description[0]}</a>
+                        <Link to={{ query: { year: record.year, code: record.description_code } }}>
+                          {record.description[0]}
+                        </Link>
                       </p>
                     </div>
                   )

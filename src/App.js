@@ -16,8 +16,8 @@ class App extends Component {
     this.state = {
       year: initialState.year,
       code: initialState.code,
-      recordTitle: null,
-      searchTerms: null
+      searchTerms: initialState.terms,
+      recordTitle: null
     }
 
     this.setPageTitle = this.setPageTitle.bind(this)
@@ -45,9 +45,15 @@ class App extends Component {
       code = String(props.location.query.code)
     }
 
+    let terms = null
+    if (props.location && props.location.query && props.location.query.terms) {
+      terms = String(props.location.query.terms)
+    }
+
     return {
       year,
-      code
+      code,
+      terms
     }
   }
 
@@ -65,12 +71,30 @@ class App extends Component {
 
   setSearchTerms (terms) {
     this.setState({ searchTerms: terms })
+
+    // Once set, we update the URL query string here. It doesn't get updated
+    // via react-router because it doesn't activate through clicking a <Link>.
+    // Apparently there is also a react-router API for transitioning URLs, but
+    // it resulted in weird (seemingly infinite loop) behavior the one time I tried.
+    let params = new window.URLSearchParams(window.location.search)
+    if (terms) {
+      params.set('terms', terms)
+    } else {
+      params.delete('terms')
+    }
+
+    window.history.replaceState({}, '', '/?' + params);
   }
 
   renderRightColumn () {
     if (this.state.year && this.state.code) {
       return <Record year={this.state.year} code={this.state.code} />
     } else {
+      const query = { year: 2012, code: '519120' }
+      if (this.state.searchTerms) {
+        query.terms = this.state.searchTerms
+      }
+
       return (
         <div id="frontpage">
           <div className="crumbs">
@@ -83,7 +107,7 @@ class App extends Component {
 
           <p>
             For a sample NAICS code,
-            {' '}<Link to={{ query: { year: 2012, code: '519120' } }}>
+            {' '}<Link to={{ query }}>
               take a look at this one.
             </Link>
           </p>
@@ -111,6 +135,10 @@ class App extends Component {
 
 App.contextTypes = {
   router: React.PropTypes.object
+}
+
+App.propTypes = {
+  location: React.PropTypes.object
 }
 
 export default App;

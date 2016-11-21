@@ -25,6 +25,7 @@ class Search extends React.Component {
 
   componentDidMount () {
     if (this.props.terms) {
+      console.log(this.props.terms)
       this.setState({
         searchInput: this.props.terms
       })
@@ -35,7 +36,6 @@ class Search extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    console.log(this.props.terms, prevProps.terms)
     if (this.props.terms !== prevProps.terms) {
       this.doSearch()
     }
@@ -121,11 +121,15 @@ class Search extends React.Component {
     const year = this.props.year
 
     return results.map(result => {
-      const url = `?year=${year}&code=${result.code}`
+      const query = {
+        year,
+        code: result.code,
+        terms: this.state.lastSearchTerms
+      }
 
       return (
         <li key={result.code}>
-          <Link to={{ query: { year, code: result.code } }}>
+          <Link to={{ query }}>
             {result.code} &ndash; {result.title}
           </Link>
         </li>

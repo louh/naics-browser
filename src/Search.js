@@ -25,7 +25,6 @@ class Search extends React.Component {
 
   componentDidMount () {
     if (this.props.terms) {
-      console.log(this.props.terms)
       this.setState({
         searchInput: this.props.terms
       })

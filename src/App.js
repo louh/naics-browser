@@ -16,7 +16,7 @@ class App extends Component {
     this.state = {
       year: initialState.year,
       code: initialState.code,
-      searchTerms: initialState.terms,
+      terms: initialState.terms,
       recordTitle: null
     }
 
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   setSearchTerms (terms) {
-    this.setState({ searchTerms: terms })
+    this.setState({ terms })
 
     // Once set, we update the URL query string here. It doesn't get updated
     // via react-router because it doesn't activate through clicking a <Link>.
@@ -88,11 +88,11 @@ class App extends Component {
 
   renderRightColumn () {
     if (this.state.year && this.state.code) {
-      return <Record year={this.state.year} code={this.state.code} />
+      return <Record year={this.state.year} code={this.state.code} terms={this.state.terms} />
     } else {
       const query = { year: 2012, code: '519120' }
-      if (this.state.searchTerms) {
-        query.terms = this.state.searchTerms
+      if (this.state.terms) {
+        query.terms = this.state.terms
       }
 
       return (
@@ -123,7 +123,7 @@ class App extends Component {
       <div role="main" className="viewport">
         <div className="left-column">
           <h1><Link to={{query: {}}}>NAICS Browser</Link></h1>
-          <Search year={this.state.year} terms={this.state.searchTerms} setSearchTerms={this.setSearchTerms} />
+          <Search year={this.state.year} terms={this.state.terms} setSearchTerms={this.setSearchTerms} />
         </div>
         <div className="right-column">
           {this.renderRightColumn()}

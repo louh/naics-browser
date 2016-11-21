@@ -15,6 +15,17 @@ function makeQueryObject (record, terms) {
 }
 
 class RecordView extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.onClickLearnMore = this.onClickLearnMore.bind(this)
+  }
+
+  onClickLearnMore (event) {
+    event.preventDefault()
+    this.props.onClickLearnMore()
+  }
+
   render () {
     const record = this.props.record
 
@@ -44,7 +55,7 @@ class RecordView extends React.Component {
               if (typeof record.trilateral !== 'undefined' && record.trilateral === 1) {
                 return (
                   <p className="note">
-                    Canadian, Mexican, and United States industries are comparable. <a href="#">Learn more</a>
+                    Canadian, Mexican, and United States industries are comparable. <a href="#t" onClick={this.onClickLearnMore}>Learn more</a>
                   </p>
                 )
               }
@@ -287,7 +298,8 @@ class RecordView extends React.Component {
 
 RecordView.propTypes = {
   record: React.PropTypes.object,
-  terms: React.PropTypes.string
+  terms: React.PropTypes.string,
+  onClickLearnMore: React.PropTypes.func
 }
 
 export default RecordView

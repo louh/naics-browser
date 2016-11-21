@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 import './App.css'
 import Search from './Search'
 import YearSelector from './YearSelector'
 import Record from './Record'
+import NAICSCompatibilityModal from './NAICSCompatibilityModal'
 
 const DEFAULT_YEAR = 2012
 
-class App extends Component {
+class App extends React.Component {
   constructor (props) {
     super(props)
 
@@ -17,12 +18,15 @@ class App extends Component {
       year: initialState.year,
       code: initialState.code,
       terms: initialState.terms,
-      recordTitle: null
+      recordTitle: null,
+      naicsCompatModal: false
     }
 
     this.setPageTitle = this.setPageTitle.bind(this)
     this.selectYear = this.selectYear.bind(this)
     this.setSearchTerms = this.setSearchTerms.bind(this)
+    this.closeCompatibilityModal = this.closeCompatibilityModal.bind(this)
+    this.onClickLearnMore = this.onClickLearnMore.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -86,9 +90,22 @@ class App extends Component {
     window.history.replaceState({}, '', '/?' + params);
   }
 
+  closeCompatibilityModal (event) {
+    event.preventDefault()
+    this.setState({
+      naicsCompatModal: false
+    })
+  }
+
+  onClickLearnMore () {
+    this.setState({
+      naicsCompatModal: true
+    })
+  }
+
   renderRightColumn () {
     if (this.state.year && this.state.code) {
-      return <Record year={this.state.year} code={this.state.code} terms={this.state.terms} />
+      return <Record year={this.state.year} code={this.state.code} terms={this.state.terms} onClickLearnMore={this.onClickLearnMore} />
     } else {
       const query = { year: 2012, code: '519120' }
       if (this.state.terms) {
@@ -119,6 +136,8 @@ class App extends Component {
   }
 
   render () {
+    const naicsCompatModal = (this.state.naicsCompatModal) ? <NAICSCompatibilityModal closeModal={this.closeCompatibilityModal }/> : null
+
     return (
       <div role="main" className="viewport">
         <div className="left-column">
@@ -128,6 +147,7 @@ class App extends Component {
         <div className="right-column">
           {this.renderRightColumn()}
         </div>
+        {naicsCompatModal}
       </div>
     );
   }

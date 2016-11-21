@@ -84,7 +84,7 @@ class Record extends React.Component {
         </div>
       )
     } else if (this.state.record) {
-      return <RecordView record={this.state.record} terms={this.props.terms} />
+      return <RecordView record={this.state.record} terms={this.props.terms} onClickLearnMore={this.props.onClickLearnMore} />
     } else if (this.state.message) {
       return <div>{this.state.message}</div>
     }
@@ -96,7 +96,8 @@ class Record extends React.Component {
 Record.propTypes = {
   year: React.PropTypes.number.isRequired,
   code: React.PropTypes.string.isRequired,
-  terms: React.PropTypes.string
+  terms: React.PropTypes.string,
+  onClickLearnMore: React.PropTypes.func
 }
 
 export default Record

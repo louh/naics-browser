@@ -16,11 +16,13 @@ class App extends Component {
     this.state = {
       year: initialState.year,
       code: initialState.code,
-      recordTitle: null
+      recordTitle: null,
+      searchTerms: null
     }
 
     this.setPageTitle = this.setPageTitle.bind(this)
     this.selectYear = this.selectYear.bind(this)
+    this.setSearchTerms = this.setSearchTerms.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -61,6 +63,10 @@ class App extends Component {
     this.setState({ year })
   }
 
+  setSearchTerms (terms) {
+    this.setState({ searchTerms: terms })
+  }
+
   renderRightColumn () {
     if (this.state.year && this.state.code) {
       return <Record year={this.state.year} code={this.state.code} />
@@ -93,7 +99,7 @@ class App extends Component {
       <div role="main" className="viewport">
         <div className="left-column">
           <h1><Link to={{query: {}}}>NAICS Browser</Link></h1>
-          <Search year={this.state.year} />
+          <Search year={this.state.year} terms={this.state.searchTerms} setSearchTerms={this.setSearchTerms} />
         </div>
         <div className="right-column">
           {this.renderRightColumn()}

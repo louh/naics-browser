@@ -28,9 +28,16 @@ class Search extends React.Component {
       this.setState({
         searchInput: this.props.terms
       })
-      this.onSubmitSearch()
+      this.doSearch()
     } else {
       this.input.focus()
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    console.log(this.props.terms, prevProps.terms)
+    if (this.props.terms !== prevProps.terms) {
+      this.doSearch()
     }
   }
 
@@ -41,6 +48,7 @@ class Search extends React.Component {
       lastSearchTerms: terms,
       isSearching: true
     })
+    this.props.setSearchTerms(terms)
 
     window.fetch(`${NAICS_SEARCH_API}year=${year}&terms=${window.encodeURIComponent(terms)}`)
       .then(response => {
@@ -84,14 +92,8 @@ class Search extends React.Component {
     })
   }
 
-  onChangeSearchInput (event) {
-    const searchInput = event.target.value
-    this.setState({ searchInput })
-  }
-
-  onSubmitSearch (event) {
-    event.preventDefault()
-    const terms = this.state.searchInput.trim()
+  doSearch () {
+    const terms = this.props.terms
     const year = this.props.year
 
     if (!terms) {
@@ -101,6 +103,17 @@ class Search extends React.Component {
     }
 
     this.getSearchResults(terms, year)
+  }
+
+  onChangeSearchInput (event) {
+    const searchInput = event.target.value
+    this.setState({ searchInput })
+  }
+
+  onSubmitSearch (event) {
+    event.preventDefault()
+    const terms = this.state.searchInput.trim()
+    this.props.setSearchTerms(terms)
   }
 
   renderSearchResults () {
@@ -180,7 +193,8 @@ class Search extends React.Component {
 
 Search.propTypes = {
   year: React.PropTypes.number.isRequired,
-  terms: React.PropTypes.string
+  terms: React.PropTypes.string,
+  setSearchTerms: React.PropTypes.func
 }
 
 export default Search

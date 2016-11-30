@@ -1,36 +1,49 @@
 /*
   A wrapper for react-router's <Link> component so that query string urls
   are appended to, not replaced. For instance, if you linked to a `code=` but
-  did not also pass `year=` to <Link to={}>, it would remove `year=` from the
-  url. This means that any component that needs to create a link needs all
+  did not also pass `year=` to react-router's <Link to={}>, it would remove
+  `year=` from the url.
+
+  This means that any component that needs to create a link needs all
   url parameters passed to it as props. The difference here is that we will
   remember url query string components so that they are replaced, old ones
   will continue to exist.
 
-  Also this simplifies the <Link to={{ query: {} }}> syntax required by
-  react-router.
-
-  Experimental. Not done. TODO: how to set initial state of this?
+  Also allows a simplified way to write the <Link to={{ query: {} }}> syntax
+  required by react-router, by using <Link query={obj}>.
 */
 import React from 'react'
-import { Link } from 'react-router'
+import { Link as WrappedLink } from 'react-router'
 
-let queryStringObject = {}
+function currentSearchParamsToObject () {
+  const params = new window.URLSearchParams(window.location.search)
+  const entries = params.entries()
+  const object = {}
 
-function LinkWrapper (props) {
-  queryStringObject = Object.assign({}, queryStringObject, props.query)
+  for (let entry of entries) {
+    const key = entry[0]
+    const value = entry[1]
+
+    object[key] = value
+  }
+
+  return object
+}
+
+export function Link (props) {
+  const { to, query, ...rest } = props
+  const currentParams = currentSearchParamsToObject()
+  const queryObject = Object.assign({}, currentParams, query || to.query)
 
   // TODO: delete keys from the object.
 
-  return ({
-    <Link to={{ query: queryStringObject }}>
-      {this.props.children}
-    </Link>
-  })
+  return (
+    <WrappedLink to={{ query: queryObject }} {...rest}>
+      {rest.children}
+    </WrappedLink>
+  )
 }
 
-LinkWrapper.propTypes = {
+Link.propTypes = {
   query: React.PropTypes.object
 }
-
-export default LinkWrapper

@@ -1,18 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from './Link'
 import reactStringReplace from 'react-string-replace'
 import { parseCrossrefs } from './record-helpers'
-
-function makeQueryObject (record, terms) {
-  const query = {
-    year: record.year,
-    code: record.description_code
-  }
-  if (terms) {
-    query.terms = terms
-  }
-  return query
-}
 
 class RecordView extends React.Component {
   constructor(props) {
@@ -64,11 +53,10 @@ class RecordView extends React.Component {
             {(() => {
               if (typeof record.description !== 'undefined') {
                 if (typeof record.description_code !== 'undefined') {
-                  const query = makeQueryObject(record, this.props.terms)
                   return (
                     <div className="naics-description">
                       <p>
-                        <Link to={{ query }}>
+                        <Link query={{ code: record.description_code }}>
                           {record.description[0]}
                         </Link>
                       </p>
@@ -139,7 +127,7 @@ class RecordView extends React.Component {
                         return (
                           <li key={index}>
                             {reactStringReplace(item.text, regexp, (match, i) => (
-                              <Link key={i} to={{ query: { year: record.year, code: item.code, terms: this.props.terms } }}>
+                              <Link key={i} query={{ code: item.code }}>
                                 {match}
                               </Link>
                             ))}
@@ -298,7 +286,6 @@ class RecordView extends React.Component {
 
 RecordView.propTypes = {
   record: React.PropTypes.object,
-  terms: React.PropTypes.string,
   onClickLearnMore: React.PropTypes.func
 }
 

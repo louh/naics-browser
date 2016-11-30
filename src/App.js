@@ -105,7 +105,7 @@ class App extends React.Component {
 
   renderRightColumn () {
     if (this.state.year && this.state.code) {
-      return <Record year={this.state.year} code={this.state.code} terms={this.state.terms} onClickLearnMore={this.onClickLearnMore} />
+      return <Record year={this.state.year} code={this.state.code} onClickLearnMore={this.onClickLearnMore} />
     } else {
       const query = { year: 2012, code: '519120' }
       if (this.state.terms) {

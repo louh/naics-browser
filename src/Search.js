@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from './Link'
 import './Search.css'
 
 const NAICS_SEARCH_API = 'http://naics.codeforamerica.org/v0/s?'
@@ -117,18 +117,17 @@ class Search extends React.Component {
 
   renderSearchResults () {
     const results = this.state.searchResults
-    const year = this.props.year
 
     return results.map(result => {
       const query = {
-        year,
+        year: this.props.year,
         code: result.code,
         terms: this.state.lastSearchTerms
       }
 
       return (
         <li key={result.code}>
-          <Link to={{ query }}>
+          <Link query={query}>
             {result.code} &ndash; {result.title}
           </Link>
         </li>

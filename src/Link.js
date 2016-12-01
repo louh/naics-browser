@@ -17,12 +17,11 @@ import { Link as WrappedLink } from 'react-router'
 
 function currentSearchParamsToObject () {
   const params = new window.URLSearchParams(window.location.search)
-  const entries = params.entries()
   const object = {}
 
-  for (let entry of entries) {
-    const key = entry[0]
-    const value = entry[1]
+  for (let param of params) {
+    const key = param[0]
+    const value = param[1]
 
     object[key] = value
   }

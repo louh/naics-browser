@@ -20,9 +20,7 @@ function currentSearchParamsToObject () {
   const object = {}
 
   for (let param of params) {
-    const key = param[0]
-    const value = param[1]
-
+    const [key, value] = param
     object[key] = value
   }
 
